@@ -83,13 +83,23 @@ and open the template in the editor.
             margin-bottom: 1.5rem;
         }
 
-        .floating-label {
+      /*  .floating-label {
             position: absolute;
             pointer-events: none;
             left: 1rem;
             top: 1rem;
             transition: 0.2s ease all;
             opacity: 0.5;
+        }*/
+        
+        .floating-label {
+            position: absolute;
+            left: 10px; /* Ajusta según sea necesario */
+            top: 50%; /* Centra verticalmente */
+            transform: translateY(-50%); /* Centra verticalmente */
+            transition: 0.2s ease all; /* Transición suave */
+            color: #0f5997; 
+            pointer-events: none; /* Evita que la etiqueta interfiera con el input */
         }
 
         .floating-input:focus ~ .floating-label,
@@ -126,7 +136,8 @@ and open the template in the editor.
         appearance: none;
         -webkit-appearance: none;
         width: 100%;
-        padding: 10px 15px;
+       /* padding: 10px 15px;*/
+        padding: 0.5rem 0.5rem 0.5rem 0.5rem; /* Espaciado interno */
         border: 2px solid #3498db;
         border-radius: 8px;
         background-color: #f9f9f9;
@@ -136,10 +147,12 @@ and open the template in the editor.
         color: #2c3e50;
     }
     
-    .custom-date-input:focus {
-        border-color: #2980b9;
-        box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
-    }
+    .custom-date-input:focus + .floating-label,
+    .custom-date-input:not(:placeholder-shown) + .floating-label {
+    top: -10px; /* Mueve la etiqueta hacia arriba */
+    font-size: 0.8rem; /* Cambia el tamaño de la fuente */
+    color: #0f5997; 
+}
     
     .date-label {
         display: block;
@@ -157,6 +170,12 @@ and open the template in the editor.
         transform: translateY(-50%);
         pointer-events: none;
     }
+    
+
+
+
+
+
         </style>
         
     </head>
@@ -279,38 +298,77 @@ and open the template in the editor.
                                           
                                             
                                             
-                    <div class="accordion" id="accordionPanelsStayOpenExample">
-                        <div class="accordion-item" th:if="${session.rol_usuario.equals('ROL_COMISIONADO')}">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-                                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" 
-                                        aria-controls="panelsStayOpen-collapseOne">
-                                    <i class="fa-solid fa-database me-2"></i> DATOS GENERALES
-                                </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                                <div class="accordion-body">
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item" th:if="${session.rol_usuario.equals('ROL_COMISIONADO')}">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" 
+                            aria-controls="panelsStayOpen-collapseOne">
+                        <i class="fa-solid fa-database me-2"></i>INFORMACIÓN GENERAL
+                    </button>
+                </h2>
+                            
+                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                            <div class="card mt-2" style="margin-bottom: 40px; border: 0; border-radius: 5px; box-shadow: 0 0 30px rgba(1, 41, 112, 0.1);">
+                                <div class="card-header" style="margin-left:30px;">
+                                    <b>1.</b>  DATOS GENERALES DE LA SUPERVISIÓN
+                                </div>
+                            </div>
+                            
+                            <div class="row" >
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="row mb-3">
 
-                                    <div class="row">  
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="row mb-3">
-                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                                    <label for="fch_supervision" class="date-label">Fecha de Supervisión</label>
-                                                </div>
-                                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                                                    <div class="date-input-container">
-                                                        <input type="date" 
-                                                               id="fch_supervision" 
-                                                               name="fch_supervision" 
-                                                               th:field="*{fch_supervision}" 
-                                                               th:min="'2019-01-15'" 
-                                                               class="custom-date-input"
-                                                               required />
-                                                    </div>
-                                                </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="floating-label-group">
+                                                <input type="date" 
+                                                       id="fch_supervision" 
+                                                       name="fch_supervision" 
+                                                       th:field="*{fch_supervision}" 
+                                                       th:min="'2019-01-15'" 
+                                                       class="custom-date-input"
+                                                       required />
+                                                <label for="fch_supervision" class="floating-label">Fecha de Supervisión</label>
                                             </div>
                                         </div>
-                                    </div>       
+                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                <div class="floating-label-group">
+                                                    <input id="hora_inicio" type="time" class="form-control search_ie floating-input" th:field="*{hora_inicio}" th:onchange="calcularTiempo()" required />
+                                                    <label for="hora_inicio" class="floating-label">Hora de Inicio:</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                <div class="floating-label-group">
+                                                    <input id="hora_fin" type="time" class="form-control search_ie floating-input" th:field="*{hora_fin}" th:onchange="calcularTiempo()" required />
+                                                    <label for="hora_fin" class="floating-label">Hora de Finalización:</label>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center">
+                                    <span>1.4 Tiempo total de supervisión (en horas y minutos) - HORAS :</span>
+                                    <input type="number" class="form-control mx-2" id="horas_total" style="width: 100px;" placeholder="HH" min="0" th:field="*{horas_total}" maxlength="2" readonly>
+                                        <span> - MINUTOS </span>
+                                    <input type="number" class="form-control mx-2" id="min_total" style="width: 100px;" placeholder="mm" min="0" th:field="*{min_total}" maxlength="2" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p style="color:#0f5997" margin-top="10px"><b>Para ser llenado al término de la visita </b></p>
+                            
+
+                         <div class="card mt-2" style="margin-bottom: 40px; border: 0; border-radius: 5px; box-shadow: 0 0 30px rgba(1, 41, 112, 0.1);">
+                                <div class="card-header" style="margin-left:30px;">
+                                    <b>2.</b>  DATOS DEFENSORIA DEL PUEBLO
+                                </div>
+                            </div>  
+
+                                    
                                  
 
                                     <div class="row">
@@ -339,13 +397,39 @@ and open the template in the editor.
 
 
 
+                                            <div class="accordion-item" >
+                                                <div class="d-flex justify-content-between">
+                                                    <div th:if="${ficha.flag_validar != '2'}">
+                                                        <button  id="btn_guardar_sec_1" class="btn btn-warning btn_guardar_parcial" type="button" name="btn_guardar_sec_1" onclick="guardar_parcial(this)">
+                                                            <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardado parcial
+                                                        </button>
+                                                    </div>
+                                                    <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
+                                                        <div id="div_sec_1_alert_validado" th:fragment="data_sec_1_alert_validado">
+                                                            <div>
+                                                                <button id="btn_validar_sec_1" class="btn btn-warning btn_validar_parcial" type="button" name="btn_validar_sec_1" onclick="validar_parcial(this)">
+                                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i> Validado parcial
+                                                                </button>
+                                                            </div>
 
+                                                            <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
+                                                                <div  class="alert alert-success" role="alert" th:if="${ficha.estado_s1 != null && ficha.estado_s1.equals('1')}">
+                                                                    <h4 class="alert-heading" style="font-weight: bold">Secci&oacute;n validada!</h4>
+                                                                </div></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
 
 
                                 </div>
                             </div>
                         </div>
                         
+<<<<<<< HEAD
+                        
+=======
                         <div class="accordion-item" >
                                                     <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                                                         <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_1') ? 'accordion-button':'accordion-button collapsed' }" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
@@ -479,6 +563,7 @@ and open the template in the editor.
                                         </div>
                                 </div>
                             </div>  
+>>>>>>> 3460238a28acafd50b91cb40deeab64a5e1a5451
                         
                                         
                                                    
