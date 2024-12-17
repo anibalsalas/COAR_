@@ -28,7 +28,7 @@ $(document).ready(function () {
     aplicarFormatoFecha2();
     validar_check_p2_1_1_a();
     validar_check_p2_1_2_a();
-
+    validar_p2_1_2_a();
    
 
     $(document).on('change', '#cod_unico', function () {
@@ -847,6 +847,17 @@ function validar_check_p2_1_1_a() {
 }
 /////////// FIN 1.1 /////
 ///////// 1.2 /////
+function validar_p2_1_2_a() {
+
+    if ($('#p2_1_2_a').is(':checked')) {
+        $(".div_p2_1_2_a_1").show();
+        $(".div_p2_1_2_a_1 :input").prop("required", true);
+    } else {
+        $(".div_p2_1_2_a_1").hide();
+        $(".div_p2_1_2_a_1 :input").prop("checked", false); // Limpiar los checkboxes
+    }
+}
+
 /////REQUERIDO LOS CHECKBOX
 $(document).on('change', '.check_p2_1_2_a', function () {
     validar_check_p2_1_2_a();

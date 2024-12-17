@@ -3,23 +3,24 @@
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
---> 
-<html lang="es" 
+-->
+<html lang="es"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns:th="http://www.thymeleaf.org" 
+      xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragment/templateIndex}">
-    <head>
-        <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Formulario de Ficha Supervisión Nacional a los Centros de Acogida Residencial de NNA</title> 
-        <!-- Tempus-dominus -->
-        <link rel="stylesheet" th:href="@{/webjars/eonasdan__tempus-dominus/6.7.7/dist/css/tempus-dominus.min.css}"/>
-        <!--Css plusnet -->
-        <link rel="stylesheet" th:href="@{/css/plusnet/plusnet.css}" type="text/css"/>
-        <!-- border-spacing:45px; -->
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>       
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css" rel="stylesheet">
-        <style type="text/css">
-          .scroll-to-top {
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Formulario de Ficha Supervisión Nacional a los Centros
+        de Acogida Residencial de NNA</title>
+    <!-- Tempus-dominus -->
+    <link rel="stylesheet" th:href="@{/webjars/eonasdan__tempus-dominus/6.7.7/dist/css/tempus-dominus.min.css}"/>
+    <!--Css plusnet -->
+    <link rel="stylesheet" th:href="@{/css/plusnet/plusnet.css}" type="text/css"/>
+    <!-- border-spacing:45px; -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css" rel="stylesheet">
+    <style type="text/css">
+        .scroll-to-top {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -45,60 +46,62 @@ and open the template in the editor.
             content: '↑';
             font-size: 24px;
         }
-            .checkNoaplica {
-                display: block;
-                min-height: 1.5rem;
-                padding-left: 35em;
-                margin-bottom: .125rem;
-            }
 
-            .na tr td input {
-                width: 7rem;
-            }
+        .checkNoaplica {
+            display: block;
+            min-height: 1.5rem;
+            padding-left: 35em;
+            margin-bottom: .125rem;
+        }
 
-            /*            @media print {
-                            @page {
-                                size: A4;
-                                margin: 0;
-                            }
-            
-                            body {
-                                transform: scale(0.8);
-                                transform-origin: 0 0;
-                            }
-                        }*/
+        .na tr td input {
+            width: 7rem;
+        }
 
-            @page {
-                size: A4;
-                margin: 0;
-            }
-            .dark-gray-divider {
+        /*            @media print {
+                        @page {
+                            size: A4;
+                            margin: 0;
+                        }
+
+                        body {
+                            transform: scale(0.8);
+                            transform-origin: 0 0;
+                        }
+                    }*/
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        .dark-gray-divider {
             border: none;
             border-top: 2px solid #333; /* Color plomo oscuro */
             margin: 20px 0;
         }
-        
+
         .floating-label-group {
             position: relative;
             margin-bottom: 1.5rem;
         }
 
-      /*  .floating-label {
-            position: absolute;
-            pointer-events: none;
-            left: 1rem;
-            top: 1rem;
-            transition: 0.2s ease all;
-            opacity: 0.5;
-        }*/
-        
+        /*  .floating-label {
+              position: absolute;
+              pointer-events: none;
+              left: 1rem;
+              top: 1rem;
+              transition: 0.2s ease all;
+              opacity: 0.5;
+          }*/
+
         .floating-label {
             position: absolute;
             left: 10px; /* Ajusta según sea necesario */
             top: 50%; /* Centra verticalmente */
             transform: translateY(-50%); /* Centra verticalmente */
             transition: 0.2s ease all; /* Transición suave */
-            color: #0f5997; 
+            color: #0f5997;
             pointer-events: none; /* Evita que la etiqueta interfiera con el input */
         }
 
@@ -115,919 +118,1127 @@ and open the template in the editor.
             padding: 1rem 1rem 0.5rem;
             width: 100%;
         }
-        
+
         .hidden-button {
             display: none;
         }
-        
-        th{
-                font-size: 0.8rem !important;
-                align-content: center;
-                font-weight: 700;
-                color: #062d73;
+
+        th {
+            font-size: 0.8rem !important;
+            align-content: center;
+            font-weight: 700;
+            color: #062d73;
         }
-        
+
         .date-input-container {
-        position: relative;
-        max-width: 300px;
-    }
-    
-    .custom-date-input {
-        appearance: none;
-        -webkit-appearance: none;
-        width: 100%;
-       /* padding: 10px 15px;*/
-        padding: 0.5rem 0.5rem 0.5rem 0.5rem; /* Espaciado interno */
-        border: 2px solid #3498db;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        outline: none;
-        color: #2c3e50;
-    }
-    
-    .custom-date-input:focus + .floating-label,
-    .custom-date-input:not(:placeholder-shown) + .floating-label {
-    top: -10px; /* Mueve la etiqueta hacia arriba */
-    font-size: 0.8rem; /* Cambia el tamaño de la fuente */
-    color: #0f5997; 
-}
-    
-    .date-label {
-        display: block;
-        margin-bottom: 8px;
-        color: #34495e;
-        font-weight: 600;
-        font-size: 15px;
-    }
-    
-    .date-input-container::after {
-        content: '📅';
-        position: absolute;
-        right: 17px;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-    }
-    
+            position: relative;
+            max-width: 300px;
+        }
 
+        .custom-date-input {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 100%;
+            /* padding: 10px 15px;*/
+            padding: 0.5rem 0.5rem 0.5rem 0.5rem; /* Espaciado interno */
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+            color: #2c3e50;
+        }
 
+        .custom-date-input:focus + .floating-label,
+        .custom-date-input:not(:placeholder-shown) + .floating-label {
+            top: -10px; /* Mueve la etiqueta hacia arriba */
+            font-size: 0.8rem; /* Cambia el tamaño de la fuente */
+            color: #0f5997;
+        }
 
+        .date-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: 600;
+            font-size: 15px;
+        }
 
+        .date-input-container::after {
+            content: '📅';
+            position: absolute;
+            right: 17px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="pagetitle">
+        <h1>Formulario de Ficha Supervisión Nacional a los COAR</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Supervisi&oacute;n a COAR</li>
+                <li class="breadcrumb-item">Registrar ficha</li>
+                <li class="breadcrumb-item active">Formulario de Ficha</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <form id="frm_fichas"
+                      method="post"
+                      autocomplete="off"
+                      th:action="@{/dp/usuario/ficha/guardarFicha}"
+                      th:object="${ficha}"
+                      onsubmit="validacion_final()"
+                      class="was-validated">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title"></h5>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
-        </style>
-        
-    </head>
-    <body>
-        <div layout:fragment="content"> 
-            <div class="pagetitle">
-                <h1>Formulario de Ficha Supervisión Nacional a los COAR</h1>
-                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Supervisi&oacute;n a COAR</li>
-                        <li class="breadcrumb-item">Registrar ficha</li>
-                        <li class="breadcrumb-item active">Formulario de Ficha</li>
-                    </ol>
-                </nav>
-            </div><!-- End Page Title -->
-            <section class="section">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <form id="frm_fichas" 
-                              method      ="post" 
-                              autocomplete="off"
-                              th:action   ="@{/dp/usuario/ficha/guardarFicha}" 
-                              th:object   ="${ficha}"  
-                              onsubmit="validacion_final()"
-                              class="was-validated">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title"></h5>
-                                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                             
-                                              <!--<div class="accordion-item" th:if="${session.rol_usuario.equals('ROL_COMISIONADO')}">
-                                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="width:100% !important; height: 50px;">  
-                                                    
-                                                         <div class="floating-label-group">
-                                                             <div id="fch_supervision" class="input-group"  data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                                 <input id="d_fch_supervision" style="height: 50px;" name="fecha_hora" th:field="*{fch_supervision}" type="text" class="form-control" data-td-target="#fch_supervision" placeholder="dd/mm/yyyy" th:readonly="true" th:required="true" />
-                                                                 <span class="input-group-text" data-td-target="#fch_supervision" data-td-toggle="datetimepicker">
-                                                                     <i class="fa-solid fa-calendar-days"></i>
-                                                                 </span>
-                                                             </div>
-                                                            
-                                                         </div>
-                                                    
-                                                 </div>
-                                           </div>-->
-                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="width:20% !important; height: 50px;">  
-                                                <div class="floating-label-group">
-                                                    <input type="text" id="cod_unico" name="cod_unico" th:field="*{cod_unico}"  class="form-control sop floating-input"  readonly ></input>
-                                                    <label for="cod_unico" class="floating-label">CODIGO COAR</label>
-                                                </div>
-                                            </div>
-                                         </div>
+                                        <!--<div class="accordion-item" th:if="${session.rol_usuario.equals('ROL_COMISIONADO')}">
+                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="width:100% !important; height: 50px;">
 
-                                           <div class="accordion-item"> 
-                                             <div class="accordion-item no_boton"  > 
-                                                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                                                    <!--<button type="button" id="download-button" value="Export" class="btn btn-primary">Imprimir</button>-->
-                                                    <button id="btn_guardar" class="btn btn-success" type="submit" name="guardar" th:if="${ficha.id_ficha!=null}" onclick="guardar_total()">
-                                                        <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardar ficha Completa</button>
-                                                    <!--<button class="btn btn-primary" th:onclick="|window.location.href='@{/educa/usuario/ficha/listarFichas}'|" type="button"  th:if="${session.rol_usuario.equals('ROL_COMISIONADO')}">
-                                                        <i class="fa-solid fa-right-from-bracket"></i> Volver</button>-->
+                                                   <div class="floating-label-group">
+                                                       <div id="fch_supervision" class="input-group"  data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                           <input id="d_fch_supervision" style="height: 50px;" name="fecha_hora" th:field="*{fch_supervision}" type="text" class="form-control" data-td-target="#fch_supervision" placeholder="dd/mm/yyyy" th:readonly="true" th:required="true" />
+                                                           <span class="input-group-text" data-td-target="#fch_supervision" data-td-toggle="datetimepicker">
+                                                               <i class="fa-solid fa-calendar-days"></i>
+                                                           </span>
+                                                       </div>
 
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <br/>
-                                            <div class="p-1 bg-secondary w-100"></div>
-                                            <br/>
-                                            <div>
-                                             <!--   <input type="hidden" id="id_ficha" th:field="*{id_ficha}" th:value="0" />-->
-                                                <input type="hidden" id="id_ficha" th:field="*{id_ficha}"/>
-                                              <!--  <input type="hidden" id="tipo_ficha" th:field="*{tipo_ficha}"/>-->
-                                                <input type="hidden" id="codi_depe_tde" th:field="*{codi_depe_tde}"/>
-                                                <input type="hidden" id="flag_guardado_parcial" th:field="*{flag_guardado_parcial}"/>
-                                                <input type="hidden" id="txt_btn_guardado_parcial" th:field="*{txt_btn_guardado_parcial}"/>
-                                                <input type="hidden" id="estado" th:field="*{estado}"/>
-                                                <input type="hidden" id="flag_modal" th:field="*{flag_modal}"/>
-                                                <input type="hidden" id="usu_registro" th:field="*{usu_registro}"/>
-                                                <input type="hidden" id="fch_registro" th:field="*{fch_registro}"/>
-                                                <input type="hidden" id="usu_actualiza" th:field="*{usu_actualiza}"/>
-                                                <input type="hidden" id="fch_actualiza" th:field="*{fch_actualiza}"/>
-                                                <input type="hidden" id="rol_usuario" th:value="${session.rol_usuario}"/>
-                                                <!--input type="hidden" id="flag_validar" th:field="*{flag_validar}"/-->
-                                                <input type="hidden" id="flag_validar" th:field="*{flag_validar}"/>
-                                                <input type="hidden" id="usu_valida" th:field="*{usu_valida}"/>
-                                                <input type="hidden" id="fch_valida" th:field="*{fch_valida}"/>
-                                                
-                                            </div>
+                                                   </div>
 
-                                            
-                                            
-                                            
-                                            <div class="alert alert-danger" role="alert" th:if="${ficha.estado != null && ficha.estado.equals('I')}">
-                                                <h4 class="alert-heading" style="font-weight: bold">Registro de ficha incompleta!</h4>
-                                            </div>
-
-                                            <div class="alert alert-success" role="alert" th:if="${ficha.estado != null and  ficha.estado.equals('C') }">
-                                                <h4 class="alert-heading" style="font-weight: bold">Registro de ficha completa!</h4>
-                                                <p>Estimado/a su ficha de supervisi&oacute;n de COAR ha sido registrada correctamente.</p>
-                                                <hr>
-                                                    <p class="mb-0">Muchas gracias por su participaci&oacute;n.</p>
-                                            </div>
-                                           
-                                            <div id="div_validar_ficha_pca" th:fragment="data_validar_ficha_pca">
-                                                <div th:if="${session.rol_especialista.equals('ROL_ESPECIALISTA')}"
-                                                     th:class="${ficha.flag_validar == null ? 'alert alert-secondary' : (ficha.flag_validar == '0' ? 'alert alert-danger' : (ficha.flag_validar == '1' ? 'alert alert-warning' : (ficha.estado != null && ficha.estado.equals('C') ? 'alert alert-success' : 'alert alert-warning')))}"
-                                                     role="alert">
-                                                    <h4 class="alert-heading" style="font-weight: bold"
-                                                        th:text="${ficha.flag_validar == null ? 'Ficha sin validar!' : (ficha.flag_validar == '0' ? 'Ficha sin validar!' : (ficha.flag_validar == '1' ? 'Ficha validada parcialmente!' : (ficha.estado != null && ficha.estado.equals('C') ? 'Ficha validada!' : 'Ficha validada parcialmente')))}"></h4>
-                                                    <p th:text="${ficha.flag_validar == null || ficha.flag_validar == '1' || ficha.flag_validar == '0' ?  'Estimado/a por favor validar las secciones faltantes.' : (ficha.estado != null && ficha.estado.equals('C') ? 'Estimado/a su ficha de supervisión ha sido validada correctamente.' : 'Estimado/a por favor completar con el guardado total de la ficha')}"></p>
-
-                                                    <div th:if="${ficha.flag_validar == '2'}">
-                                                        <hr>
-                                                            <p class="mb-0">Muchas gracias por su participación.</p>
-                                                    </div>
-                                                </div>
-                                            </div>  
-                                          
-                                            
-                                            
-        <div class="accordion" id="accordionPanelsStayOpenExample">
-            <div class="accordion-item" th:if="${session.rol_usuario.equals('ROL_COMISIONADO')}">
-                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" 
-                            aria-controls="panelsStayOpen-collapseOne">
-                        <i class="fa-solid fa-database me-2"></i>INFORMACIÓN GENERAL
-                    </button>
-                </h2>
-                            
-                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                    <div class="accordion-body">
-                            <div class="card mt-2" style="margin-bottom: 40px; border: 0; border-radius: 5px; box-shadow: 0 0 30px rgba(1, 41, 112, 0.1);">
-                                <div class="card-header" style="margin-left:30px;">
-                                    <b>1.</b>  DATOS GENERALES DE LA SUPERVISIÓN
-                                </div>
-                            </div>
-                            
-                            <div class="row" >
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="row mb-3">
-
-                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                           </div>
+                                     </div>-->
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                             style="width:20% !important; height: 50px;">
                                             <div class="floating-label-group">
-                                                <input type="date" 
-                                                       id="fch_supervision" 
-                                                       name="fch_supervision" 
-                                                       th:field="*{fch_supervision}" 
-                                                       th:min="'2019-01-15'" 
-                                                       class="custom-date-input"
-                                                       required />
-                                                <label for="fch_supervision" class="floating-label">Fecha de Supervisión</label>
-                                            </div>
-                                        </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                                <div class="floating-label-group">
-                                                    <input id="hora_inicio" type="time" class="form-control search_ie floating-input" th:field="*{hora_inicio}" th:onchange="calcularTiempo()" required />
-                                                    <label for="hora_inicio" class="floating-label">Hora de Inicio:</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                                <div class="floating-label-group">
-                                                    <input id="hora_fin" type="time" class="form-control search_ie floating-input" th:field="*{hora_fin}" th:onchange="calcularTiempo()" required />
-                                                    <label for="hora_fin" class="floating-label">Hora de Finalización:</label>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <div class="d-flex align-items-center">
-                                    <span>1.4 Tiempo total de supervisión (en horas y minutos) - HORAS :</span>
-                                    <input type="number" class="form-control mx-2" id="horas_total" style="width: 100px;" placeholder="HH" min="0" th:field="*{horas_total}" maxlength="2" readonly>
-                                        <span> - MINUTOS </span>
-                                    <input type="number" class="form-control mx-2" id="min_total" style="width: 100px;" placeholder="mm" min="0" th:field="*{min_total}" maxlength="2" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <p style="color:#0f5997" margin-top="10px"><b>Para ser llenado al término de la visita </b></p>
-                            
-
-                         <div class="card mt-2" style="margin-bottom: 40px; border: 0; border-radius: 5px; box-shadow: 0 0 30px rgba(1, 41, 112, 0.1);">
-                                <div class="card-header" style="margin-left:30px;">
-                                    <b>2.</b>  DATOS DEFENSORIA DEL PUEBLO
-                                </div>
-                            </div>  
-
-                                    
-                                 
-
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="row mb-3">
-                                                <label for="txt_desc_depe_tde" class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-form-label">OD o MOD</label>
-                                                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                                                    <input id="txt_desc_depe_tde" th:field="*{txt_desc_depe_tde}" th:readonly="true" type="text" class="form-control-plaintext"></input>
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="row mb-3">
-                                                <label for="txt_comisionado" class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-form-label">Comisionado/a ó entrevistador(a):</label>
-                                                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                                                    <input id="txt_comisionado" th:field="*{txt_comisionado}" th:readonly="true" type="text" class="form-control-plaintext " ></input>
-                                                </div>
+                                                <input type="text" id="cod_unico" name="cod_unico"
+                                                       th:field="*{cod_unico}" class="form-control sop floating-input"
+                                                       readonly></input>
+                                                <label for="cod_unico" class="floating-label">CODIGO COAR</label>
                                             </div>
                                         </div>
                                     </div>
 
+                                    <div class="accordion-item">
+                                        <div class="accordion-item no_boton">
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                                                <!--<button type="button" id="download-button" value="Export" class="btn btn-primary">Imprimir</button>-->
+                                                <button id="btn_guardar" class="btn btn-success" type="submit"
+                                                        name="guardar" th:if="${ficha.id_ficha!=null}"
+                                                        onclick="guardar_total()">
+                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardar ficha
+                                                    Completa
+                                                </button>
+                                                <!--<button class="btn btn-primary" th:onclick="|window.location.href='@{/educa/usuario/ficha/listarFichas}'|" type="button"  th:if="${session.rol_usuario.equals('ROL_COMISIONADO')}">
+                                                    <i class="fa-solid fa-right-from-bracket"></i> Volver</button>-->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="p-1 bg-secondary w-100"></div>
+                                    <br/>
+                                    <div>
+                                        <!--   <input type="hidden" id="id_ficha" th:field="*{id_ficha}" th:value="0" />-->
+                                        <input type="hidden" id="id_ficha" th:field="*{id_ficha}"/>
+                                        <!--  <input type="hidden" id="tipo_ficha" th:field="*{tipo_ficha}"/>-->
+                                        <input type="hidden" id="codi_depe_tde" th:field="*{codi_depe_tde}"/>
+                                        <input type="hidden" id="flag_guardado_parcial"
+                                               th:field="*{flag_guardado_parcial}"/>
+                                        <input type="hidden" id="txt_btn_guardado_parcial"
+                                               th:field="*{txt_btn_guardado_parcial}"/>
+                                        <input type="hidden" id="estado" th:field="*{estado}"/>
+                                        <input type="hidden" id="flag_modal" th:field="*{flag_modal}"/>
+                                        <input type="hidden" id="usu_registro" th:field="*{usu_registro}"/>
+                                        <input type="hidden" id="fch_registro" th:field="*{fch_registro}"/>
+                                        <input type="hidden" id="usu_actualiza" th:field="*{usu_actualiza}"/>
+                                        <input type="hidden" id="fch_actualiza" th:field="*{fch_actualiza}"/>
+                                        <input type="hidden" id="rol_usuario" th:value="${session.rol_usuario}"/>
+                                        <!--input type="hidden" id="flag_validar" th:field="*{flag_validar}"/-->
+                                        <input type="hidden" id="flag_validar" th:field="*{flag_validar}"/>
+                                        <input type="hidden" id="usu_valida" th:field="*{usu_valida}"/>
+                                        <input type="hidden" id="fch_valida" th:field="*{fch_valida}"/>
+
+                                    </div>
 
 
+                                    <div class="alert alert-danger" role="alert"
+                                         th:if="${ficha.estado != null && ficha.estado.equals('I')}">
+                                        <h4 class="alert-heading" style="font-weight: bold">Registro de ficha
+                                            incompleta!</h4>
+                                    </div>
 
-                                            <div class="accordion-item" >
-                                                <div class="d-flex justify-content-between">
-                                                    <div th:if="${ficha.flag_validar != '2'}">
-                                                        <button  id="btn_guardar_sec_1" class="btn btn-warning btn_guardar_parcial" type="button" name="btn_guardar_sec_1" onclick="guardar_parcial(this)">
-                                                            <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardado parcial
-                                                        </button>
+                                    <div class="alert alert-success" role="alert"
+                                         th:if="${ficha.estado != null and  ficha.estado.equals('C') }">
+                                        <h4 class="alert-heading" style="font-weight: bold">Registro de ficha
+                                            completa!</h4>
+                                        <p>Estimado/a su ficha de supervisi&oacute;n de COAR ha sido registrada
+                                            correctamente.</p>
+                                        <hr>
+                                        <p class="mb-0">Muchas gracias por su participaci&oacute;n.</p>
+                                    </div>
+
+                                    <div id="div_validar_ficha_pca" th:fragment="data_validar_ficha_pca">
+                                        <div th:if="${session.rol_especialista.equals('ROL_ESPECIALISTA')}"
+                                             th:class="${ficha.flag_validar == null ? 'alert alert-secondary' : (ficha.flag_validar == '0' ? 'alert alert-danger' : (ficha.flag_validar == '1' ? 'alert alert-warning' : (ficha.estado != null && ficha.estado.equals('C') ? 'alert alert-success' : 'alert alert-warning')))}"
+                                             role="alert">
+                                            <h4 class="alert-heading" style="font-weight: bold"
+                                                th:text="${ficha.flag_validar == null ? 'Ficha sin validar!' : (ficha.flag_validar == '0' ? 'Ficha sin validar!' : (ficha.flag_validar == '1' ? 'Ficha validada parcialmente!' : (ficha.estado != null && ficha.estado.equals('C') ? 'Ficha validada!' : 'Ficha validada parcialmente')))}"></h4>
+                                            <p th:text="${ficha.flag_validar == null || ficha.flag_validar == '1' || ficha.flag_validar == '0' ?  'Estimado/a por favor validar las secciones faltantes.' : (ficha.estado != null && ficha.estado.equals('C') ? 'Estimado/a su ficha de supervisión ha sido validada correctamente.' : 'Estimado/a por favor completar con el guardado total de la ficha')}"></p>
+
+                                            <div th:if="${ficha.flag_validar == '2'}">
+                                                <hr>
+                                                <p class="mb-0">Muchas gracias por su participación.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="accordion" id="accordionPanelsStayOpenExample">
+                                        <div class="accordion-item"
+                                             th:if="${session.rol_usuario.equals('ROL_COMISIONADO')}">
+                                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                                <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapseOne"
+                                                        aria-expanded="true"
+                                                        aria-controls="panelsStayOpen-collapseOne">
+                                                    <i class="fa-solid fa-database me-2"></i>INFORMACIÓN GENERAL
+                                                </button>
+                                            </h2>
+
+                                            <div id="panelsStayOpen-collapseOne"
+                                                 class="accordion-collapse collapse show">
+                                                <div class="accordion-body">
+                                                    <div class="card mt-2"
+                                                         style="margin-bottom: 40px; border: 0; border-radius: 5px; box-shadow: 0 0 30px rgba(1, 41, 112, 0.1);">
+                                                        <div class="card-header" style="margin-left:30px;">
+                                                            <b>1.</b> DATOS GENERALES DE LA SUPERVISIÓN
+                                                        </div>
                                                     </div>
-                                                    <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
-                                                        <div id="div_sec_1_alert_validado" th:fragment="data_sec_1_alert_validado">
-                                                            <div>
-                                                                <button id="btn_validar_sec_1" class="btn btn-warning btn_validar_parcial" type="button" name="btn_validar_sec_1" onclick="validar_parcial(this)">
-                                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i> Validado parcial
+
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="row mb-3">
+
+                                                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                                    <div class="floating-label-group">
+                                                                        <input type="date"
+                                                                               id="fch_supervision"
+                                                                               name="fch_supervision"
+                                                                               th:field="*{fch_supervision}"
+                                                                               th:min="'2019-01-15'"
+                                                                               class="custom-date-input"
+                                                                               required/>
+                                                                        <label for="fch_supervision"
+                                                                               class="floating-label">Fecha de
+                                                                            Supervisión</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                                    <div class="floating-label-group">
+                                                                        <input id="hora_inicio" type="time"
+                                                                               class="form-control search_ie floating-input"
+                                                                               th:field="*{hora_inicio}"
+                                                                               th:onchange="calcularTiempo()" required/>
+                                                                        <label for="hora_inicio" class="floating-label">Hora
+                                                                            de Inicio:</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                                    <div class="floating-label-group">
+                                                                        <input id="hora_fin" type="time"
+                                                                               class="form-control search_ie floating-input"
+                                                                               th:field="*{hora_fin}"
+                                                                               th:onchange="calcularTiempo()" required/>
+                                                                        <label for="hora_fin" class="floating-label">Hora
+                                                                            de Finalización:</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-12">
+                                                            <div class="d-flex align-items-center">
+                                                                <span>1.4 Tiempo total de supervisión (en horas y minutos) - HORAS :</span>
+                                                                <input type="number" class="form-control mx-2"
+                                                                       id="horas_total" style="width: 100px;"
+                                                                       placeholder="HH" min="0"
+                                                                       th:field="*{horas_total}" maxlength="2" readonly>
+                                                                <span> - MINUTOS </span>
+                                                                <input type="number" class="form-control mx-2"
+                                                                       id="min_total" style="width: 100px;"
+                                                                       placeholder="mm" min="0" th:field="*{min_total}"
+                                                                       maxlength="2" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <p style="color:#0f5997" margin-top="10px"><b>Para ser llenado al
+                                                        término de la visita </b></p>
+
+
+                                                    <div class="card mt-2"
+                                                         style="margin-bottom: 40px; border: 0; border-radius: 5px; box-shadow: 0 0 30px rgba(1, 41, 112, 0.1);">
+                                                        <div class="card-header" style="margin-left:30px;">
+                                                            <b>2.</b> DATOS DEFENSORIA DEL PUEBLO
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="row mb-3">
+                                                                <label for="txt_desc_depe_tde"
+                                                                       class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-form-label">OD
+                                                                    o MOD</label>
+                                                                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                                                    <input id="txt_desc_depe_tde"
+                                                                           th:field="*{txt_desc_depe_tde}"
+                                                                           th:readonly="true" type="text"
+                                                                           class="form-control-plaintext"></input>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="row mb-3">
+                                                                <label for="txt_comisionado"
+                                                                       class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-form-label">Comisionado/a
+                                                                    ó entrevistador(a):</label>
+                                                                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                                                    <input id="txt_comisionado"
+                                                                           th:field="*{txt_comisionado}"
+                                                                           th:readonly="true" type="text"
+                                                                           class="form-control-plaintext "></input>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="accordion-item">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div th:if="${ficha.flag_validar != '2'}">
+                                                                <button id="btn_guardar_sec_1"
+                                                                        class="btn btn-warning btn_guardar_parcial"
+                                                                        type="button" name="btn_guardar_sec_1"
+                                                                        onclick="guardar_parcial(this)">
+                                                                    <i class="fa fa-cloud-upload"
+                                                                       aria-hidden="true"></i> Guardado parcial
                                                                 </button>
                                                             </div>
+                                                            <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
+                                                                <div id="div_sec_1_alert_validado"
+                                                                     th:fragment="data_sec_1_alert_validado">
+                                                                    <div>
+                                                                        <button id="btn_validar_sec_1"
+                                                                                class="btn btn-warning btn_validar_parcial"
+                                                                                type="button" name="btn_validar_sec_1"
+                                                                                onclick="validar_parcial(this)">
+                                                                            <i class="fa fa-cloud-upload"
+                                                                               aria-hidden="true"></i> Validado parcial
+                                                                        </button>
+                                                                    </div>
 
-                                                            <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
-                                                                <div  class="alert alert-success" role="alert" th:if="${ficha.estado_s1 != null && ficha.estado_s1.equals('1')}">
-                                                                    <h4 class="alert-heading" style="font-weight: bold">Secci&oacute;n validada!</h4>
-                                                                </div></div>
+                                                                    <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
+                                                                        <div class="alert alert-success" role="alert"
+                                                                             th:if="${ficha.estado_s1 != null && ficha.estado_s1.equals('1')}">
+                                                                            <h4 class="alert-heading"
+                                                                                style="font-weight: bold">Secci&oacute;n
+                                                                                validada!</h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item" >
-                                                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                                        <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_1') ? 'accordion-button':'accordion-button collapsed' }" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                                                            INFORMACIÓN DEL CENTRO DE ACOGIDA RESIDENCIAL
-                                                        </button>
-                                                    </h2>
-                                                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show mt-4"> 
-                                                        <div class="accordion-body">
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                                                <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_1') ? 'accordion-button':'accordion-button collapsed' }"
+                                                        type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapseTwo"
+                                                        aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                                                    INFORMACIÓN DEL CENTRO DE ACOGIDA RESIDENCIAL
+                                                </button>
+                                            </h2>
+                                            <div id="panelsStayOpen-collapseTwo"
+                                                 class="accordion-collapse collapse show mt-4">
+                                                <div class="accordion-body">
 
 
-                                                            <div id="data_busqueda" th:fragment="data_busqueda">
-                                                                <div>
-                                                                    <input type="hidden" id="flag_ie" />
-                                                                    <input type="hidden" id="msg_modal_ie" />
-                                                                    <input type="hidden" id="id_sestablecmnt" th:field="*{id_sestablecmnt}" />
-                                                                </div>
-                                                                <div class="row" >
+                                                    <div id="data_busqueda" th:fragment="data_busqueda">
+                                                        <div>
+                                                            <input type="hidden" id="flag_ie"/>
+                                                            <input type="hidden" id="msg_modal_ie"/>
+                                                            <input type="hidden" id="id_sestablecmnt"
+                                                                   th:field="*{id_sestablecmnt}"/>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="row mb-3">
+
                                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                        <div class="row mb-3">
+                                                                        <div class="floating-label-group">
+                                                                            <input id="nom_entidad" maxlength="190"
+                                                                                   type="text" th:field="*{nom_entidad}"
+                                                                                   onkeyup="mayus(this);"
+                                                                                   class="form-control floating-input only-text"
+                                                                                   onkeypress="if (this.value.length === 190)
+                                                                    return false;"></input>
+                                                                            <label for="nom_entidad"
+                                                                                   class="floating-label">Nombre del
+                                                                                Centro de Acogida Residencial :</label>
+                                                                        </div>
+                                                                    </div>
 
-                                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                                <div class="floating-label-group">
-                                                                                    <input id="nom_entidad"  maxlength="190" type="text" th:field="*{nom_entidad}" onkeyup="mayus(this);"  class="form-control floating-input only-text"  onkeypress="if (this.value.length === 190)
-                                                                    return false;"   ></input>
-                                                                                    <label for="nom_entidad" class="floating-label">Nombre del Centro de Acogida Residencial :</label>
-                                                                                </div>
-                                                                            </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="row mb-3">
+                                                                    <!-- <label for="xxx" class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-form-label"> Ubicaci&oacute;n </label>-->
+                                                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 
+                                                                        <div class="form-floating mb-3">
+                                                                            <input id="departamento_coar"
+                                                                                   name="departamento_coar" type="text"
+                                                                                   th:field="*{departamento_coar}"
+                                                                                   th:readonly="true"
+                                                                                   class="form-control search_ie"></input>
+
+                                                                            <label for="departamento_coar"><b></b>Departamento:
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                                        <div class="form-floating mb-3">
+                                                                            <input id="provincia_coar"
+                                                                                   name="provincia_coar" type="text"
+                                                                                   th:field="*{provincia_coar}"
+                                                                                   th:readonly="true"
+                                                                                   class="form-control search_ie"></input>
+
+                                                                            <label for="provincia_coar"><b></b>Provincia:
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                                        <div class="form-floating mb-3">
+                                                                            <input id="distrito_coar"
+                                                                                   name="distrito_coar" type="text"
+                                                                                   th:field="*{distrito_coar}"
+                                                                                   th:readonly="true"
+                                                                                   class="form-control search_ie"></input>
+
+                                                                            <label for="distrito_coar"><b></b>Distrito:
+                                                                            </label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row" >
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" id="codi_depa_dpt"
+                                                               th:field="*{codi_depa_dpt}"/>
+                                                        <input type="hidden" id="codi_prov_tpr"
+                                                               th:field="*{codi_prov_tpr}"/>
+                                                        <input type="hidden" id="codi_dist_tdi"
+                                                               th:field="*{codi_dist_tdi}"/>
+
+
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="row mb-3">
                                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                        <div class="row mb-3">
-                                                                            <!-- <label for="xxx" class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-form-label"> Ubicaci&oacute;n </label>-->
-                                                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                                        <div class="floating-label-group">
+                                                                            <input id="direccion_coar" maxlength="250"
+                                                                                   type="text"
+                                                                                   th:field="*{direccion_coar}"
+                                                                                   class="form-control floating-input"
+                                                                                   onkeypress="if (this.value.length === 250) return false;"></input>
 
-                                                                                <div class="form-floating mb-3">
-                                                                                    <input id="departamento_coar"    name="departamento_coar" type="text" th:field="*{departamento_coar}" th:readonly="true" class="form-control search_ie"></input>
-
-                                                                                    <label for="departamento_coar"><b></b>Departamento: </label>  
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                                                                <div class="form-floating mb-3">
-                                                                                    <input id="provincia_coar" name="provincia_coar"  type="text"   th:field="*{provincia_coar}" th:readonly="true" class="form-control search_ie"></input>
-
-                                                                                    <label for="provincia_coar"><b></b>Provincia: </label>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                                                                <div class="form-floating mb-3">
-                                                                                    <input id="distrito_coar" name="distrito_coar"  type="text"   th:field="*{distrito_coar}" th:readonly="true" class="form-control search_ie" ></input>
-
-                                                                                    <label for="distrito_coar"><b></b>Distrito: </label>
-                                                                                </div>
-                                                                            </div>
+                                                                            <label for="direccion_coar"
+                                                                                   class="floating-label">Dirección
+                                                                                :</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <input type="hidden" id="codi_depa_dpt" th:field="*{codi_depa_dpt}"/>
-                                                                <input type="hidden" id="codi_prov_tpr" th:field="*{codi_prov_tpr}"/>
-                                                                <input type="hidden" id="codi_dist_tdi" th:field="*{codi_dist_tdi}"/>
-                                                                
-                                                                
-                                                                <div class="row">
-                                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                        <div class="row mb-3">
-                                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                                <div class="floating-label-group">
-                                                                                    <input id="direccion_coar" maxlength="250"  type="text"
-                                                                                           th:field="*{direccion_coar}"  class="form-control floating-input"  onkeypress="if (this.value.length === 250) return false;" ></input>
-                                                                                          
-                                                                                    <label for="direccion_coar" class="floating-label">Dirección :</label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                               
-                                                                
-                                                                <h1>• Para ser llenado al término de la visita </h1>
-                                                                
-                                                              
-                                                                        
-                                                                
-                                                                
-                                                               
-                                                                
-                                                    
-<!---------------------------INICIO OCULTA------------------->
-                                                <div class="oculta_s1" id="oculta_s1x" th:if="${ficha.id_ficha!=null}">  
-                                                        
-                                                                
-                                                                                                            
-                                                </div>                                                              
-<!---------------------------FIN OCULTA------------------->
+                                                            </div>
+                                                        </div>
 
-                                                                <div class="accordion-item" >
-                                                                    <div class="d-flex justify-content-between">
-                                                                        <div th:if="${ficha.flag_validar != '2'}">
-                                                                            <button  id="btn_guardar_sec_1" class="btn btn-warning btn_guardar_parcial" type="button" name="btn_guardar_sec_1" onclick="guardar_parcial(this)">
-                                                                                <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardado parcial
+
+                                                        <h1>• Para ser llenado al término de la visita </h1>
+
+
+                                                        <!---------------------------INICIO OCULTA------------------->
+                                                        <div class="oculta_s1" id="oculta_s1x"
+                                                             th:if="${ficha.id_ficha!=null}">
+
+
+                                                        </div>
+                                                        <!---------------------------FIN OCULTA------------------->
+
+                                                        <div class="accordion-item">
+                                                            <div class="d-flex justify-content-between">
+                                                                <div th:if="${ficha.flag_validar != '2'}">
+                                                                    <button id="btn_guardar_sec_1"
+                                                                            class="btn btn-warning btn_guardar_parcial"
+                                                                            type="button" name="btn_guardar_sec_1"
+                                                                            onclick="guardar_parcial(this)">
+                                                                        <i class="fa fa-cloud-upload"
+                                                                           aria-hidden="true"></i> Guardado parcial
+                                                                    </button>
+                                                                </div>
+                                                                <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
+                                                                    <div id="div_sec_1_alert_validado"
+                                                                         th:fragment="data_sec_1_alert_validado">
+                                                                        <div>
+                                                                            <button id="btn_validar_sec_1"
+                                                                                    class="btn btn-warning btn_validar_parcial"
+                                                                                    type="button"
+                                                                                    name="btn_validar_sec_1"
+                                                                                    onclick="validar_parcial(this)">
+                                                                                <i class="fa fa-cloud-upload"
+                                                                                   aria-hidden="true"></i> Validado
+                                                                                parcial
                                                                             </button>
                                                                         </div>
-                                                                        <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
-                                                                            <div id="div_sec_1_alert_validado" th:fragment="data_sec_1_alert_validado">
-                                                                                <div>
-                                                                                    <button id="btn_validar_sec_1" class="btn btn-warning btn_validar_parcial" type="button" name="btn_validar_sec_1" onclick="validar_parcial(this)">
-                                                                                        <i class="fa fa-cloud-upload" aria-hidden="true"></i> Validado parcial
-                                                                                    </button>
-                                                                                </div>
 
-                                                                                <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
-                                                                                    <div  class="alert alert-success" role="alert" th:if="${ficha.estado_s1 != null && ficha.estado_s1.equals('1')}">
-                                                                                        <h4 class="alert-heading" style="font-weight: bold">Secci&oacute;n validada!</h4>
-                                                                                    </div></div>
+                                                                        <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
+                                                                            <div class="alert alert-success"
+                                                                                 role="alert"
+                                                                                 th:if="${ficha.estado_s1 != null && ficha.estado_s1.equals('1')}">
+                                                                                <h4 class="alert-heading"
+                                                                                    style="font-weight: bold">Secci&oacute;n
+                                                                                    validada!</h4>
                                                                             </div>
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                </div>
-                            </div>
-                        
-                                        
-                                                   
-                                        
-                                          
-                                              <div class="accordion-item " th:if="${ficha.id_ficha != null}">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-headingFour">
-                                                        <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_2') ? 'accordion-button':'accordion-button collapsed' }" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
-                                                            II. INFORMACIÓN ADMINISTRATIVA
-                                                        </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapseFour" th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_2') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }"aria-labelledby="panelsStayOpen-headingFour">
-                                                        <div class="accordion-body">
-                                                            
-                                                            <input type="hidden" id="id_sec_2" th:field="*{coar_ficha_s2.id_ficha_s2}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s2.id_ficha}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s2.usu_registro}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s2.fch_registro}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s2.usu_actualiza}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s2.fch_actualiza}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s2.usu_valida}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s2.fch_valida}"/>
 
-                                                            <div class="card"
-                                                                 style="margin-bottom: 30px; border: 0; border-radius: 5px; box-shadow: 0 0 30px rgba(1, 41, 112, 0.1);">
-                                                                <div class="card-header" style="margin-left:30px;">
-                                                                    <b>1.</b> DOCUMENTOS LEGALES Y ADMINISTRATIVOS
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                    <div class="row mb-3">
-                                                                        <label class="col-xs-12 col-sm-12 col-md-3 col-lg-12 col-form-label">
-                                                                            1.1. ¿El COAR cuenta con Certificados y Registros
-                                                                            necesarios para su funcionamiento? (Opción Múltiple)</label>
-                                                                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-9">
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input check_p2_1_1_a"
-                                                                                       type="checkbox" id="p2_1_1_a"
-                                                                                       th:field="*{coar_ficha_s2.p2_1_1_a}"
-                                                                                       value="S"
-                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_1_a == 'S' }"/>
-                                                                                <label class="form-check-label">
-                                                                                    a) Autorización de funcionamiento emitida por la DRE - MINEDU
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input check_p2_1_1_a"
-                                                                                       type="checkbox" id="p2_1_1_b"
-                                                                                       th:field="*{coar_ficha_s2.p2_1_1_b}"
-                                                                                       value="S"
-                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_1_b == 'S' }"/>
-                                                                                <label class="form-check-label">
-                                                                                    b) Registro en el Sistema de Registro Nacional de Instituciones Educativas (RIE)
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input check_p2_1_1_a"
-                                                                                       type="checkbox" id="p2_1_1_c"
-                                                                                       th:field="*{coar_ficha_s2.p2_1_1_c}"
-                                                                                       value="S"
-                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_1_c == 'S' }"
-                                                                                       th:onchange="validar_check_p2_1_1_a()"/>
-                                                                                <label class="form-check-label">
-                                                                                    c) Documento desactualizado o vencido
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
+
+                                        <div class="accordion-item " th:if="${ficha.id_ficha != null}">
+                                            <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                                                <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_2') ? 'accordion-button':'accordion-button collapsed' }"
+                                                        type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapseFour"
+                                                        aria-expanded="true"
+                                                        aria-controls="panelsStayOpen-collapseFour">
+                                                    II. INFORMACIÓN ADMINISTRATIVA
+                                                </button>
+                                            </h2>
+                                            <div id="panelsStayOpen-collapseFour"
+                                                 th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_2') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }"
+                                                 aria-labelledby="panelsStayOpen-headingFour">
+                                                <div class="accordion-body">
+
+                                                    <input type="hidden" id="id_sec_2"
+                                                           th:field="*{coar_ficha_s2.id_ficha_s2}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s2.id_ficha}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s2.usu_registro}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s2.fch_registro}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s2.usu_actualiza}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s2.fch_actualiza}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s2.usu_valida}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s2.fch_valida}"/>
+
+                                                    <div class="card"
+                                                         style="margin-bottom: 30px; border: 0; border-radius: 5px; box-shadow: 0 0 30px rgba(1, 41, 112, 0.1);">
+                                                        <div class="card-header" style="margin-left:30px;">
+                                                            <b>1.</b> DOCUMENTOS LEGALES Y ADMINISTRATIVOS
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="row mb-3">
+                                                                <label class="col-xs-12 col-sm-12 col-md-3 col-lg-12 col-form-label">
+                                                                    1.1. ¿El COAR cuenta con Certificados y Registros
+                                                                    necesarios para su funcionamiento? (Opción
+                                                                    Múltiple)</label>
+                                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-9">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check_p2_1_1_a"
+                                                                               type="checkbox" id="p2_1_1_a"
+                                                                               th:field="*{coar_ficha_s2.p2_1_1_a}"
+                                                                               value="S"
+                                                                               th:checked="${ficha.coar_ficha_s2.p2_1_1_a == 'S' }"/>
+                                                                        <label class="form-check-label">
+                                                                            a) Autorización de funcionamiento emitida
+                                                                            por la DRE - MINEDU
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check_p2_1_1_a"
+                                                                               type="checkbox" id="p2_1_1_b"
+                                                                               th:field="*{coar_ficha_s2.p2_1_1_b}"
+                                                                               value="S"
+                                                                               th:checked="${ficha.coar_ficha_s2.p2_1_1_b == 'S' }"/>
+                                                                        <label class="form-check-label">
+                                                                            b) Registro en el Sistema de Registro
+                                                                            Nacional de Instituciones Educativas (RIE)
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check_p2_1_1_a"
+                                                                               type="checkbox" id="p2_1_1_c"
+                                                                               th:field="*{coar_ficha_s2.p2_1_1_c}"
+                                                                               value="S"
+                                                                               th:checked="${ficha.coar_ficha_s2.p2_1_1_c == 'S' }"
+                                                                               th:onchange="validar_check_p2_1_1_a()"/>
+                                                                        <label class="form-check-label">
+                                                                            c) Documento desactualizado o vencido
+                                                                        </label>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <br/>
-                                                            <div class="row">
-                                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                    <div class="row mb-3">
-                                                                        <label class="col-xs-12 col-sm-12 col-md-3 col-lg-12 col-form-label">
-                                                                            1.2. Si falta alguno de los documentos descritos en 1.1, indique cuál, según el motivo.</label>
-                                                                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-9">
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="row mb-3">
+                                                                <label class="col-xs-12 col-sm-12 col-md-3 col-lg-12 col-form-label">
+                                                                    1.2. Si falta alguno de los documentos descritos en
+                                                                    1.1, indique cuál, según el motivo.</label>
+                                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-9">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check_p2_1_2_a"
+                                                                               type="checkbox" id="p2_1_2_a"
+                                                                               th:field="*{coar_ficha_s2.p2_1_2_a}"
+                                                                               value="S"
+                                                                               th:checked="${ficha.coar_ficha_s2.p2_1_2_a == 'A' }"/>
+                                                                        <label class="form-check-label">
+                                                                            a) Documento en trámite
+                                                                        </label>
+                                                                        <div class="row div_p2_1_2_a_1" >
+                                                                            <div class="form-check ">
+                                                                                <input class="form-check-input check_p2_1_2_a"
+                                                                                       type="checkbox" id="p2_1_2_a_1"
+                                                                                       th:field="*{coar_ficha_s2.p2_1_2_a_1}"
+                                                                                       value="S"
+                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_2_a_1 == 'S' }"/>
+                                                                                <label class="form-check-label">
+                                                                                    a.1) Nuevo
+                                                                                </label>
+                                                                            </div>
                                                                             <div class="form-check">
                                                                                 <input class="form-check-input check_p2_1_2_a"
-                                                                                       type="checkbox" id="p2_1_2_a"
-                                                                                       th:field="*{coar_ficha_s2.p2_1_2_a}"
+                                                                                       type="checkbox" id="p2_1_2_a_2"
+                                                                                       th:field="*{coar_ficha_s2.p2_1_2_a_2}"
                                                                                        value="S"
-                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_2_a == 'S' }"
-                                                                                       />
+                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_2_a_2 == 'S' }"/>
                                                                                 <label class="form-check-label">
-                                                                                    a) Documento en trámite
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input check_p2_1_2_a"
-                                                                                       type="checkbox" id="p2_1_2_b"
-                                                                                       th:field="*{coar_ficha_s2.p2_1_2_b}"
-                                                                                       value="S"
-                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_2_b == 'S' }"/>
-                                                                                <label class="form-check-label">
-                                                                                    b) No se ha gestionado el documento
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input check_p2_1_2_a"
-                                                                                       type="checkbox" id="p2_1_2_c"
-                                                                                       th:field="*{coar_ficha_s2.p2_1_2_c}"
-                                                                                       value="S"
-                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_2_c == 'S' }"
-                                                                                       onchange="validar_check_p2_1_2_a()"/>
-                                                                                <label class="form-check-label">
-                                                                                    c) Certificado de Inspección Técnica de Seguridad en Edificaciones (ITSE)
+                                                                                    a.2) Por levantamiento de
+                                                                                    observaciones
                                                                                 </label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check_p2_1_2_a"
+                                                                               type="checkbox" id="p2_1_2_b"
+                                                                               th:field="*{coar_ficha_s2.p2_1_2_b}"
+                                                                               value="S"
+                                                                               th:checked="${ficha.coar_ficha_s2.p2_1_2_b == 'S' }"/>
+                                                                        <label class="form-check-label">
+                                                                            b) No se ha gestionado el documento
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check_p2_1_2_a"
+                                                                               type="checkbox" id="p2_1_2_c"
+                                                                               th:field="*{coar_ficha_s2.p2_1_2_c}"
+                                                                               value="S"
+                                                                               th:checked="${ficha.coar_ficha_s2.p2_1_2_c == 'S' }"
+                                                                               onchange="validar_check_p2_1_2_a()"/>
+                                                                        <label class="form-check-label">
+                                                                            c) Certificado de Inspección Técnica de
+                                                                            Seguridad en Edificaciones (ITSE)
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <br/>
-                                                           <div class="accordion-item" >
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div th:if="${ficha.flag_validar != '2'}">
-                                                                        <button  id="btn_guardar_sec_2" class="btn btn-warning btn_guardar_parcial" type="button" name="btn_guardar_sec_2" onclick="guardar_parcial(this)">
-                                                                            <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardado parcial
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="accordion-item">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div th:if="${ficha.flag_validar != '2'}">
+                                                                <button id="btn_guardar_sec_2"
+                                                                        class="btn btn-warning btn_guardar_parcial"
+                                                                        type="button" name="btn_guardar_sec_2"
+                                                                        onclick="guardar_parcial(this)">
+                                                                    <i class="fa fa-cloud-upload"
+                                                                       aria-hidden="true"></i> Guardado parcial
+                                                                </button>
+                                                            </div>
+                                                            <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
+                                                                <div id="div_sec_2_alert_validado"
+                                                                     th:fragment="data_sec_2_alert_validado">
+                                                                    <div>
+                                                                        <button id="btn_validar_sec_2"
+                                                                                class="btn btn-warning btn_validar_parcial"
+                                                                                type="button" name="btn_validar_sec_2"
+                                                                                onclick="validar_parcial(this)">
+                                                                            <i class="fa fa-cloud-upload"
+                                                                               aria-hidden="true"></i> Validado parcial
                                                                         </button>
                                                                     </div>
-                                                                    <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
-                                                                        <div id="div_sec_2_alert_validado" th:fragment="data_sec_2_alert_validado">
-                                                                            <div>
-                                                                                <button id="btn_validar_sec_2" class="btn btn-warning btn_validar_parcial" type="button" name="btn_validar_sec_2" onclick="validar_parcial(this)">
-                                                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i> Validado parcial
-                                                                                </button>
-                                                                            </div>
-                                                                          
-                                                                            <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
 
-                                                                                <div  class="alert alert-success" role="alert" th:if="${ficha.coar_ficha_s2.estado_s2 != null && ficha.coar_ficha_s2.estado_s2.equals('1')}">
-                                                                                    <h4 class="alert-heading" style="font-weight: bold">Secci&oacute;n validada!</h4>
-                                                                                </div>
-                                                                            </div>
+                                                                    <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
+
+                                                                        <div class="alert alert-success" role="alert"
+                                                                             th:if="${ficha.coar_ficha_s2.estado_s2 != null && ficha.coar_ficha_s2.estado_s2.equals('1')}">
+                                                                            <h4 class="alert-heading"
+                                                                                style="font-weight: bold">Secci&oacute;n
+                                                                                validada!</h4>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
-                                                            
-                                                            
                                                         </div>
                                                     </div>
+
+
                                                 </div>
-
-                                                <div class="accordion-item " th:if="${ficha.id_ficha!=null}">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-headingFive">
-                                                        <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_3') ? 'accordion-button':'accordion-button collapsed' }" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="true" aria-controls="panelsStayOpen-collapseFive">
-                                                            III. CARACTERÍSTICAS GENERALES DE LA INSTITUCIÓN EDUCATIVA
-                                                        </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapseFive" th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_3') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }" aria-labelledby="panelsStayOpen-headingFive">
-                                                        <div class="accordion-body">
-                                                            
-                                                         
-                                                            
-                                                           
-                                                       <input type="hidden" id="id_sec_3"     th:field="*{coar_ficha_s3.id_ficha_s3}"/>
-                                                            <input type="hidden" id="coar_ficha_s3_id_ficha"        th:field="*{coar_ficha_s3.id_ficha}"/>
-                                                            <input type="hidden" id="coar_ficha_s3_usu_registro"    th:field="*{coar_ficha_s3.usu_registro}"/>
-                                                            <input type="hidden" id="coar_ficha_s3_fch_registro"    th:field="*{coar_ficha_s3.fch_registro}"/>
-                                                            <input type="hidden" id="coar_ficha_s3_usu_actualiza"   th:field="*{coar_ficha_s3.usu_actualiza}"/>
-                                                            <input type="hidden" id="coar_ficha_s3_fch_actualiza"   th:field="*{coar_ficha_s3.fch_actualiza}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s3.usu_valida}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s3.fch_valida}"/> 
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                          <div class="accordion-item" >
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div th:if="${ficha.flag_validar != '2'}">
-                                                                        <button  id="btn_guardar_sec_3" class="btn btn-warning btn_guardar_parcial" type="button" name="btn_guardar_sec_3" onclick="guardar_parcial(this)">
-                                                                            <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardado parcial
-                                                                        </button>
-                                                                    </div>
-                                                                    <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
-                                                                        <div id="div_sec_3_alert_validado" th:fragment="data_sec_3_alert_validado">
-                                                                            <div>
-                                                                                <button id="btn_validar_sec_3" class="btn btn-warning btn_validar_parcial" type="button" name="btn_validar_sec_3" onclick="validar_parcial(this)">
-                                                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i> Validado parcial
-                                                                                </button>
-                                                                            </div>
-                                                                          
-                                                                            <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
-                                                                                <div  class="alert alert-success" role="alert" th:if="${ficha.coar_ficha_s3.estado_s3 != null && ficha.coar_ficha_s3.estado_s3.equals('1')}">
-                                                                                    <h4 class="alert-heading" style="font-weight: bold">Secci&oacute;n validada!</h4>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                             </div>       
-                                                    
-                                                    
-                                                    
-
-                                                <div class="accordion-item " th:if="${ficha.id_ficha!=null}">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-headingSix">
-                                                        <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_4') ? 'accordion-button':'accordion-button collapsed' }" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="true" aria-controls="panelsStayOpen-collapseSix">
-                                                            IV. GESTIÓN DE LA INSTITUCIÓN EDUCATIVA
-
-                                                        </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapseSix" th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_4') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }" aria-labelledby="panelsStayOpen-headingSix">
-
-                                                        <div class="accordion-body">
-
-                                                            <input type="hidden" id="id_sec_4" th:field="*{coar_ficha_s4.id_ficha_s4}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s4.id_ficha}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s4.usu_registro}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s4.fch_registro}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s4.usu_actualiza}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s4.fch_actualiza}"/>
-                                                             <input type="hidden" th:field="*{coar_ficha_s4.usu_valida}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s4.fch_valida}"/> 
-                                                            
-                                                            
-                                                            
-
-                                                            <br/>
-                                                          <div class="accordion-item" >
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div th:if="${ficha.flag_validar != '2'}">
-                                                                        <button  id="btn_guardar_sec_4" class="btn btn-warning btn_guardar_parcial" type="button" name="btn_guardar_sec_4" onclick="guardar_parcial(this)">
-                                                                            <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardado parcial
-                                                                        </button>
-                                                                    </div>
-                                                                    <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
-                                                                        <div id="div_sec_4_alert_validado" th:fragment="data_sec_4_alert_validado">
-                                                                            <div>
-                                                                                <button id="btn_validar_sec_4" class="btn btn-warning btn_validar_parcial" type="button" name="btn_validar_sec_4" onclick="validar_parcial(this)">
-                                                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i> Validado parcial
-                                                                                </button>
-                                                                            </div>
-
-                                                                            <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
-                                                                                <div  class="alert alert-success" role="alert" th:if="${ficha.coar_ficha_s4.estado_s4 != null && ficha.coar_ficha_s4.estado_s4.equals('1')}">
-                                                                                    <h4 class="alert-heading" style="font-weight: bold">Secci&oacute;n validada!</h4>
-                                                                                </div>
-                                                                            </div> 
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="accordion-item" th:if="${ficha.id_ficha!=null}">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-headingSeven">
-                                                        <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_5') ? 'accordion-button':'accordion-button collapsed' }" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="true" aria-controls="panelsStayOpen-collapseSeven">
-                                                            V. MODELO DE SERVICIO EDUCATIVO SOBRESALIENTE CON RESIDENCIA ESTUDIANTIL
-
-                                                        </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapseSeven" th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_5') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }" aria-labelledby="panelsStayOpen-headingSeven">
-
-                                                        <div class="accordion-body">
-
-                                                            <input type="hidden" id="id_sec_5" th:field="*{coar_ficha_s5.id_ficha_s5}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s5.id_ficha}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s5.usu_registro}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s5.fch_registro}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s5.usu_actualiza}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s5.fch_actualiza}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s5.usu_valida}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s5.fch_valida}"/> 
-                                                            
-                                                     
-                                                        
-                                                 
-                                                  
-                                                             <br/>
-                                                            <div class="accordion-item" >
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div th:if="${ficha.flag_validar != '2'}">
-                                                                        <button  id="btn_guardar_sec_5" class="btn btn-warning btn_guardar_parcial" type="button" name="btn_guardar_sec_5" onclick="guardar_parcial(this)">
-                                                                            <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardado parcial
-                                                                        </button>
-                                                                    </div>
-                                                                    <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
-                                                                        <div id="div_sec_5_alert_validado" th:fragment="data_sec_5_alert_validado">
-                                                                            <div>
-                                                                                <button id="btn_validar_sec_5" class="btn btn-warning btn_validar_parcial" type="button" name="btn_validar_sec_5" onclick="validar_parcial(this)">
-                                                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i> Validado parcial
-                                                                                </button>
-                                                                            </div>
-                                                                          
-                                                                            
-                                                                            <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
-                                                                                <div  class="alert alert-success" role="alert" th:if="${ficha.coar_ficha_s5.estado_s5 != null && ficha.coar_ficha_s5.estado_s5.equals('1')}">
-                                                                                    <h4 class="alert-heading" style="font-weight: bold">Secci&oacute;n validada!</h4>
-                                                                                </div>
-                                                                            </div>
-                                                                            
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                           
-                                                        </div>    
-                                                        
-                                                        </div>
-                                                    </div>
-                                                    
-
-
-                                                <div class="accordion-item" th:if="${ficha.id_ficha!=null}">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-heading6">
-                                                        <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_6') ? 'accordion-button':'accordion-button collapsed' }" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse6" aria-expanded="true" aria-controls="panelsStayOpen-collapse6">
-                                                            VI. POBLACIÓN ESTUDIANTIL DEL MODELO DE SERVICIO EDUCATIVO SOBRESALIENTE 
-                                                        </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapse6" th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_6') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }" aria-labelledby="panelsStayOpen-heading6">
-                                                        <div class="accordion-body">
-
-                                                            <input type="hidden" id="id_sec_6" th:field="*{coar_ficha_s6.id_ficha_s6}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s6.id_ficha}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s6.fch_registro}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s6.fch_actualiza}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s6.usu_registro}" />
-                                                               <input type="hidden" th:field="*{coar_ficha_s6.usu_valida}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s6.fch_valida}"/> 
-                                                     
-                                                    
-                                                            <br/>
-                                                              <div class="accordion-item" >
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div th:if="${ficha.flag_validar != '2'}">
-                                                                        <button  id="btn_guardar_sec_6" class="btn btn-warning btn_guardar_parcial" type="button" name="btn_guardar_sec_6" onclick="guardar_parcial(this)">
-                                                                            <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardado parcial
-                                                                        </button>
-                                                                    </div>
-                                                                    <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
-                                                                        <div id="div_sec_6_alert_validado" th:fragment="data_sec_6_alert_validado">
-                                                                            <div>
-                                                                                <button id="btn_validar_sec_6" class="btn btn-warning btn_validar_parcial" type="button" name="btn_validar_sec_6" onclick="validar_parcial(this)">
-                                                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i> Validado parcial
-                                                                                </button>
-                                                                            </div>
-                                                                          
-                                                                            <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
-                                                                           <div  class="alert alert-success" role="alert" th:if="${ficha.coar_ficha_s6.estado_s6 != null && ficha.coar_ficha_s6.estado_s6.equals('1')}">
-                                                                                <h4 class="alert-heading" style="font-weight: bold">Secci&oacute;n validada!</h4>
-                                                                            </div></div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                            
-                                               <div class="accordion-item" th:if="${ficha.id_ficha!=null}">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-heading7">
-                                                        <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_7') ? 'accordion-button':'accordion-button collapsed' }" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse7" aria-expanded="true" aria-controls="panelsStayOpen-collapse7">
-                                                            VII. REGLAMENTO INTERNO
-                                                        </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapse7" th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_7') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }" aria-labelledby="panelsStayOpen-heading7">
-                                                        <div class="accordion-body">
-
-                                                            <input type="hidden" id="id_sec_7" th:field="*{coar_ficha_s7.id_ficha_s7}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s7.id_ficha}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s7.fch_registro}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s7.fch_actualiza}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s7.usu_registro}" />
-                                                               <input type="hidden" th:field="*{coar_ficha_s7.usu_valida}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s7.fch_valida}"/> 
-
-                                                            
-                                                            <br/>
-                                                              <div class="accordion-item" >
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div th:if="${ficha.flag_validar != '2'}">
-                                                                        <button  id="btn_guardar_sec_7" class="btn btn-warning btn_guardar_parcial" type="button" name="btn_guardar_sec_7" onclick="guardar_parcial(this)">
-                                                                            <i class="fa fa-cloud-upload" aria-hidden="true"></i> Guardado parcial
-                                                                        </button>
-                                                                    </div>
-                                                                    <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
-                                                                        <div id="div_sec_7_alert_validado" th:fragment="data_sec_7_alert_validado">
-                                                                            <div>
-                                                                                <button id="btn_validar_sec_7" class="btn btn-warning btn_validar_parcial" type="button" name="btn_validar_sec_7" onclick="validar_parcial(this)">
-                                                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i> Validado parcial
-                                                                                </button>
-                                                                            </div>
-                                                                          
-                                                                            <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
-                                                                           <div  class="alert alert-success" role="alert" th:if="${ficha.coar_ficha_s7.estado_s7 != null && ficha.coar_ficha_s7.estado_s7.equals('1')}">
-                                                                        <h4 class="alert-heading" style="font-weight: bold">Secci&oacute;n validada!</h4>
-                                                                    </div></div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>             
-
-        
-                                                            
                                             </div>
                                         </div>
-                                    </div> 
-                                </div>
-                            </div>
-                        </form>
-                        
-                      
-                        <!--MODAL INFORMACION-->
-                        <div id="mdl_info_ficha" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-                            <div class="modal-dialog">
-                                <!--Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                                        <h4 class="modal-title">Informaci&oacute;n</h4>
+
+                                        <div class="accordion-item " th:if="${ficha.id_ficha!=null}">
+                                            <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+                                                <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_3') ? 'accordion-button':'accordion-button collapsed' }"
+                                                        type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapseFive"
+                                                        aria-expanded="true"
+                                                        aria-controls="panelsStayOpen-collapseFive">
+                                                    III. CARACTERÍSTICAS GENERALES DE LA INSTITUCIÓN EDUCATIVA
+                                                </button>
+                                            </h2>
+                                            <div id="panelsStayOpen-collapseFive"
+                                                 th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_3') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }"
+                                                 aria-labelledby="panelsStayOpen-headingFive">
+                                                <div class="accordion-body">
+
+
+                                                    <input type="hidden" id="id_sec_3"
+                                                           th:field="*{coar_ficha_s3.id_ficha_s3}"/>
+                                                    <input type="hidden" id="coar_ficha_s3_id_ficha"
+                                                           th:field="*{coar_ficha_s3.id_ficha}"/>
+                                                    <input type="hidden" id="coar_ficha_s3_usu_registro"
+                                                           th:field="*{coar_ficha_s3.usu_registro}"/>
+                                                    <input type="hidden" id="coar_ficha_s3_fch_registro"
+                                                           th:field="*{coar_ficha_s3.fch_registro}"/>
+                                                    <input type="hidden" id="coar_ficha_s3_usu_actualiza"
+                                                           th:field="*{coar_ficha_s3.usu_actualiza}"/>
+                                                    <input type="hidden" id="coar_ficha_s3_fch_actualiza"
+                                                           th:field="*{coar_ficha_s3.fch_actualiza}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s3.usu_valida}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s3.fch_valida}"/>
+
+
+                                                    <div class="accordion-item">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div th:if="${ficha.flag_validar != '2'}">
+                                                                <button id="btn_guardar_sec_3"
+                                                                        class="btn btn-warning btn_guardar_parcial"
+                                                                        type="button" name="btn_guardar_sec_3"
+                                                                        onclick="guardar_parcial(this)">
+                                                                    <i class="fa fa-cloud-upload"
+                                                                       aria-hidden="true"></i> Guardado parcial
+                                                                </button>
+                                                            </div>
+                                                            <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
+                                                                <div id="div_sec_3_alert_validado"
+                                                                     th:fragment="data_sec_3_alert_validado">
+                                                                    <div>
+                                                                        <button id="btn_validar_sec_3"
+                                                                                class="btn btn-warning btn_validar_parcial"
+                                                                                type="button" name="btn_validar_sec_3"
+                                                                                onclick="validar_parcial(this)">
+                                                                            <i class="fa fa-cloud-upload"
+                                                                               aria-hidden="true"></i> Validado parcial
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
+                                                                        <div class="alert alert-success" role="alert"
+                                                                             th:if="${ficha.coar_ficha_s3.estado_s3 != null && ficha.coar_ficha_s3.estado_s3.equals('1')}">
+                                                                            <h4 class="alert-heading"
+                                                                                style="font-weight: bold">Secci&oacute;n
+                                                                                validada!</h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="accordion-item " th:if="${ficha.id_ficha!=null}">
+                                            <h2 class="accordion-header" id="panelsStayOpen-headingSix">
+                                                <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_4') ? 'accordion-button':'accordion-button collapsed' }"
+                                                        type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapseSix"
+                                                        aria-expanded="true" aria-controls="panelsStayOpen-collapseSix">
+                                                    IV. GESTIÓN DE LA INSTITUCIÓN EDUCATIVA
+
+                                                </button>
+                                            </h2>
+                                            <div id="panelsStayOpen-collapseSix"
+                                                 th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_4') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }"
+                                                 aria-labelledby="panelsStayOpen-headingSix">
+
+                                                <div class="accordion-body">
+
+                                                    <input type="hidden" id="id_sec_4"
+                                                           th:field="*{coar_ficha_s4.id_ficha_s4}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s4.id_ficha}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s4.usu_registro}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s4.fch_registro}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s4.usu_actualiza}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s4.fch_actualiza}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s4.usu_valida}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s4.fch_valida}"/>
+
+
+                                                    <br/>
+                                                    <div class="accordion-item">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div th:if="${ficha.flag_validar != '2'}">
+                                                                <button id="btn_guardar_sec_4"
+                                                                        class="btn btn-warning btn_guardar_parcial"
+                                                                        type="button" name="btn_guardar_sec_4"
+                                                                        onclick="guardar_parcial(this)">
+                                                                    <i class="fa fa-cloud-upload"
+                                                                       aria-hidden="true"></i> Guardado parcial
+                                                                </button>
+                                                            </div>
+                                                            <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
+                                                                <div id="div_sec_4_alert_validado"
+                                                                     th:fragment="data_sec_4_alert_validado">
+                                                                    <div>
+                                                                        <button id="btn_validar_sec_4"
+                                                                                class="btn btn-warning btn_validar_parcial"
+                                                                                type="button" name="btn_validar_sec_4"
+                                                                                onclick="validar_parcial(this)">
+                                                                            <i class="fa fa-cloud-upload"
+                                                                               aria-hidden="true"></i> Validado parcial
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
+                                                                        <div class="alert alert-success" role="alert"
+                                                                             th:if="${ficha.coar_ficha_s4.estado_s4 != null && ficha.coar_ficha_s4.estado_s4.equals('1')}">
+                                                                            <h4 class="alert-heading"
+                                                                                style="font-weight: bold">Secci&oacute;n
+                                                                                validada!</h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="accordion-item" th:if="${ficha.id_ficha!=null}">
+                                            <h2 class="accordion-header" id="panelsStayOpen-headingSeven">
+                                                <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_5') ? 'accordion-button':'accordion-button collapsed' }"
+                                                        type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapseSeven"
+                                                        aria-expanded="true"
+                                                        aria-controls="panelsStayOpen-collapseSeven">
+                                                    V. MODELO DE SERVICIO EDUCATIVO SOBRESALIENTE CON RESIDENCIA
+                                                    ESTUDIANTIL
+
+                                                </button>
+                                            </h2>
+                                            <div id="panelsStayOpen-collapseSeven"
+                                                 th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_5') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }"
+                                                 aria-labelledby="panelsStayOpen-headingSeven">
+
+                                                <div class="accordion-body">
+
+                                                    <input type="hidden" id="id_sec_5"
+                                                           th:field="*{coar_ficha_s5.id_ficha_s5}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s5.id_ficha}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s5.usu_registro}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s5.fch_registro}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s5.usu_actualiza}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s5.fch_actualiza}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s5.usu_valida}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s5.fch_valida}"/>
+
+
+                                                    <br/>
+                                                    <div class="accordion-item">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div th:if="${ficha.flag_validar != '2'}">
+                                                                <button id="btn_guardar_sec_5"
+                                                                        class="btn btn-warning btn_guardar_parcial"
+                                                                        type="button" name="btn_guardar_sec_5"
+                                                                        onclick="guardar_parcial(this)">
+                                                                    <i class="fa fa-cloud-upload"
+                                                                       aria-hidden="true"></i> Guardado parcial
+                                                                </button>
+                                                            </div>
+                                                            <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
+                                                                <div id="div_sec_5_alert_validado"
+                                                                     th:fragment="data_sec_5_alert_validado">
+                                                                    <div>
+                                                                        <button id="btn_validar_sec_5"
+                                                                                class="btn btn-warning btn_validar_parcial"
+                                                                                type="button" name="btn_validar_sec_5"
+                                                                                onclick="validar_parcial(this)">
+                                                                            <i class="fa fa-cloud-upload"
+                                                                               aria-hidden="true"></i> Validado parcial
+                                                                        </button>
+                                                                    </div>
+
+
+                                                                    <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
+                                                                        <div class="alert alert-success" role="alert"
+                                                                             th:if="${ficha.coar_ficha_s5.estado_s5 != null && ficha.coar_ficha_s5.estado_s5.equals('1')}">
+                                                                            <h4 class="alert-heading"
+                                                                                style="font-weight: bold">Secci&oacute;n
+                                                                                validada!</h4>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="accordion-item" th:if="${ficha.id_ficha!=null}">
+                                            <h2 class="accordion-header" id="panelsStayOpen-heading6">
+                                                <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_6') ? 'accordion-button':'accordion-button collapsed' }"
+                                                        type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapse6" aria-expanded="true"
+                                                        aria-controls="panelsStayOpen-collapse6">
+                                                    VI. POBLACIÓN ESTUDIANTIL DEL MODELO DE SERVICIO EDUCATIVO
+                                                    SOBRESALIENTE
+                                                </button>
+                                            </h2>
+                                            <div id="panelsStayOpen-collapse6"
+                                                 th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_6') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }"
+                                                 aria-labelledby="panelsStayOpen-heading6">
+                                                <div class="accordion-body">
+
+                                                    <input type="hidden" id="id_sec_6"
+                                                           th:field="*{coar_ficha_s6.id_ficha_s6}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s6.id_ficha}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s6.fch_registro}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s6.fch_actualiza}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s6.usu_registro}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s6.usu_valida}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s6.fch_valida}"/>
+
+
+                                                    <br/>
+                                                    <div class="accordion-item">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div th:if="${ficha.flag_validar != '2'}">
+                                                                <button id="btn_guardar_sec_6"
+                                                                        class="btn btn-warning btn_guardar_parcial"
+                                                                        type="button" name="btn_guardar_sec_6"
+                                                                        onclick="guardar_parcial(this)">
+                                                                    <i class="fa fa-cloud-upload"
+                                                                       aria-hidden="true"></i> Guardado parcial
+                                                                </button>
+                                                            </div>
+                                                            <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
+                                                                <div id="div_sec_6_alert_validado"
+                                                                     th:fragment="data_sec_6_alert_validado">
+                                                                    <div>
+                                                                        <button id="btn_validar_sec_6"
+                                                                                class="btn btn-warning btn_validar_parcial"
+                                                                                type="button" name="btn_validar_sec_6"
+                                                                                onclick="validar_parcial(this)">
+                                                                            <i class="fa fa-cloud-upload"
+                                                                               aria-hidden="true"></i> Validado parcial
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
+                                                                        <div class="alert alert-success" role="alert"
+                                                                             th:if="${ficha.coar_ficha_s6.estado_s6 != null && ficha.coar_ficha_s6.estado_s6.equals('1')}">
+                                                                            <h4 class="alert-heading"
+                                                                                style="font-weight: bold">Secci&oacute;n
+                                                                                validada!</h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="accordion-item" th:if="${ficha.id_ficha!=null}">
+                                            <h2 class="accordion-header" id="panelsStayOpen-heading7">
+                                                <button th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_7') ? 'accordion-button':'accordion-button collapsed' }"
+                                                        type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapse7" aria-expanded="true"
+                                                        aria-controls="panelsStayOpen-collapse7">
+                                                    VII. REGLAMENTO INTERNO
+                                                </button>
+                                            </h2>
+                                            <div id="panelsStayOpen-collapse7"
+                                                 th:class="${ficha.txt_btn_guardado_parcial != null && ficha.txt_btn_guardado_parcial.equals('btn_guardar_sec_7') ? 'accordion-collapse collapse show':'accordion-collapse collapse' }"
+                                                 aria-labelledby="panelsStayOpen-heading7">
+                                                <div class="accordion-body">
+
+                                                    <input type="hidden" id="id_sec_7"
+                                                           th:field="*{coar_ficha_s7.id_ficha_s7}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s7.id_ficha}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s7.fch_registro}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s7.fch_actualiza}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s7.usu_registro}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s7.usu_valida}"/>
+                                                    <input type="hidden" th:field="*{coar_ficha_s7.fch_valida}"/>
+
+
+                                                    <br/>
+                                                    <div class="accordion-item">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div th:if="${ficha.flag_validar != '2'}">
+                                                                <button id="btn_guardar_sec_7"
+                                                                        class="btn btn-warning btn_guardar_parcial"
+                                                                        type="button" name="btn_guardar_sec_7"
+                                                                        onclick="guardar_parcial(this)">
+                                                                    <i class="fa fa-cloud-upload"
+                                                                       aria-hidden="true"></i> Guardado parcial
+                                                                </button>
+                                                            </div>
+                                                            <div th:if="${session.rol_especialista == 'ROL_ESPECIALISTA'}">
+                                                                <div id="div_sec_7_alert_validado"
+                                                                     th:fragment="data_sec_7_alert_validado">
+                                                                    <div>
+                                                                        <button id="btn_validar_sec_7"
+                                                                                class="btn btn-warning btn_validar_parcial"
+                                                                                type="button" name="btn_validar_sec_7"
+                                                                                onclick="validar_parcial(this)">
+                                                                            <i class="fa fa-cloud-upload"
+                                                                               aria-hidden="true"></i> Validado parcial
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <div th:if="${session.rol_usuario == 'ROL_ESPECIALISTA' || session.rol_usuario == 'ROL_COMISIONADO'}">
+                                                                        <div class="alert alert-success" role="alert"
+                                                                             th:if="${ficha.coar_ficha_s7.estado_s7 != null && ficha.coar_ficha_s7.estado_s7.equals('1')}">
+                                                                            <h4 class="alert-heading"
+                                                                                style="font-weight: bold">Secci&oacute;n
+                                                                                validada!</h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </div>
-                                    <div class="modal-body">
-                                        <strong><p><label id="msg_modal" th:text="${ficha.msg_modal}"></label></p></strong>
-                                    </div>
-                                    <!--<div class="modal-footer">
-                                        <button id="btn_cerrar" type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                            <i class="fa-solid fa-rectangle-xmark"></i> Cerrar</button>
-                                    </div>-->
                                 </div>
                             </div>
                         </div>
-                        <!--FIN MODAL INFORMACION-->
-                        
-                        <!-- INICIO MODAL SECCION SEC1- 1.2 -->
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+                    </div>
+                </form>
 
+
+                <!--MODAL INFORMACION-->
+                <div id="mdl_info_ficha" class="modal fade" role="dialog" data-bs-backdrop="static"
+                     data-bs-keyboard="false">
+                    <div class="modal-dialog">
+                        <!--Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                                <h4 class="modal-title">Informaci&oacute;n</h4>
+                            </div>
+                            <div class="modal-body">
+                                <strong><p><label id="msg_modal" th:text="${ficha.msg_modal}"></label></p></strong>
+                            </div>
+                            <!--<div class="modal-footer">
+                                <button id="btn_cerrar" type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                    <i class="fa-solid fa-rectangle-xmark"></i> Cerrar</button>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+                <!--FIN MODAL INFORMACION-->
+
+                <!-- INICIO MODAL SECCION SEC1- 1.2 -->
+
+
+            </div>
         </div>
-    </div> 
-    <!--End row -->
+        <!--End row -->
 
-    </section> 
-            
-            
-            
-            <div class="scroll-to-top" onclick="scrollToTop()"></div>
-            <!-- Jquery -->
-            <script th:src="@{/webjars/jquery/3.6.3/jquery.min.js}" type="text/javascript"></script>
-            <!-- Tempus-dominus -->
-            <script th:src="@{/webjars/popperjs__core/2.11.7/dist/umd/popper.min.js}"></script>
-            <script th:src="@{/webjars/eonasdan__tempus-dominus/6.7.7/dist/js/tempus-dominus.js}" ></script>
-            <script th:src="@{/webjars/eonasdan__tempus-dominus/6.7.7/dist/js/jQuery-provider.js}" ></script>
-            <script th:src="@{/webjars/momentjs/2.29.4/min/moment-with-locales.min.js}"></script>
-            <!--jscript lista atencion -->
-            
-            <script th:src="@{/js/gestioncoar/usuario/ficha_formulario.js}" type="text/javascript"></script>
+    </section>
 
-           
-  <script>
+
+    <div class="scroll-to-top" onclick="scrollToTop()"></div>
+    <!-- Jquery -->
+    <script th:src="@{/webjars/jquery/3.6.3/jquery.min.js}" type="text/javascript"></script>
+    <!-- Tempus-dominus -->
+    <script th:src="@{/webjars/popperjs__core/2.11.7/dist/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/eonasdan__tempus-dominus/6.7.7/dist/js/tempus-dominus.js}"></script>
+    <script th:src="@{/webjars/eonasdan__tempus-dominus/6.7.7/dist/js/jQuery-provider.js}"></script>
+    <script th:src="@{/webjars/momentjs/2.29.4/min/moment-with-locales.min.js}"></script>
+    <!--jscript lista atencion -->
+
+    <script th:src="@{/js/gestioncoar/usuario/ficha_formulario.js}" type="text/javascript"></script>
+
+
+    <script>
         function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
     </script>
 
-          
-        </div> <!-- End content -->
-    </body>    
+
+</div> <!-- End content -->
+</body>
 </html>
