@@ -7,6 +7,7 @@ package com.dp.gestioncoar.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -102,6 +103,14 @@ public class Demuna_FichaEntity implements Serializable {
     
     private String direccion_coar;
     
+    private Integer hora_inicio;
+    
+    private Integer hora_fin;
+    
+   
+    
+    private LocalTime horas_total;
+    private LocalTime min_total;
     
     @Transient
     private Demuna_FichaEntity coar_ficha;
@@ -372,6 +381,38 @@ public class Demuna_FichaEntity implements Serializable {
         this.direccion_coar = direccion_coar;
     }
 
+    public Integer getHora_inicio() {
+        return hora_inicio;
+    }
+
+    public void setHora_inicio(Integer hora_inicio) {
+        this.hora_inicio = hora_inicio;
+    }
+
+    public Integer getHora_fin() {
+        return hora_fin;
+    }
+
+    public void setHora_fin(Integer hora_fin) {
+        this.hora_fin = hora_fin;
+    }
+
+    public LocalTime getHoras_total() {
+        return horas_total;
+    }
+
+    public void setHoras_total(LocalTime horas_total) {
+        this.horas_total = horas_total;
+    }
+
+    public LocalTime getMin_total() {
+        return min_total;
+    }
+
+    public void setMin_total(LocalTime min_total) {
+        this.min_total = min_total;
+    }
+
     public Demuna_FichaEntity getCoar_ficha() {
         return coar_ficha;
     }
@@ -492,7 +533,7 @@ public class Demuna_FichaEntity implements Serializable {
         this.cod_unico_ant = cod_unico_ant;
     }
 
+    
    
-
 
 }
