@@ -511,36 +511,80 @@ and open the template in the editor.
                                                             <div class="row">
                                                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                                     <div class="row mb-3">
-                                                                        <label class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-form-label">
+                                                                        <label class="col-xs-12 col-sm-12 col-md-3 col-lg-12 col-form-label">
                                                                             1.1. ¿El COAR cuenta con Certificados y Registros
                                                                             necesarios para su funcionamiento? (Opción Múltiple)</label>
-                                                                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-9">
                                                                             <div class="form-check">
-                                                                                <input class="form-check-input check_coar_ficha_s2"
-                                                                                       type="checkbox" id="coar_ficha_s2"
-                                                                                       th:field="*{coar_ficha_s2.p7_4_2_a}"
+                                                                                <input class="form-check-input check_p2_1_1_a"
+                                                                                       type="checkbox" id="p2_1_1_a"
+                                                                                       th:field="*{coar_ficha_s2.p2_1_1_a}"
                                                                                        value="S"
-                                                                                       th:checked="${ficha.coar_ficha_s2.p7_4_2_a == 'S' }"/>
+                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_1_a == 'S' }"/>
                                                                                 <label class="form-check-label">
                                                                                     a) Autorización de funcionamiento emitida por la DRE - MINEDU
                                                                                 </label>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <input class="form-check-input check_p7_4_2_a"
-                                                                                       type="checkbox" id="p7_4_2_b"
-                                                                                       th:field="*{coar_ficha_s2.p7_4_2_b}"
+                                                                                <input class="form-check-input check_p2_1_1_a"
+                                                                                       type="checkbox" id="p2_1_1_b"
+                                                                                       th:field="*{coar_ficha_s2.p2_1_1_b}"
                                                                                        value="S"
-                                                                                       th:checked="${ficha.coar_ficha_s2.p7_4_2_b == 'S' }"/>
+                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_1_b == 'S' }"/>
                                                                                 <label class="form-check-label">
                                                                                     b) Registro en el Sistema de Registro Nacional de Instituciones Educativas (RIE)
                                                                                 </label>
                                                                             </div>
                                                                             <div class="form-check">
-                                                                                <input class="form-check-input check_p7_4_2_a"
-                                                                                       type="checkbox" id="p7_4_2_c"
-                                                                                       th:field="*{coar_ficha_s2.p7_4_2_c}"
+                                                                                <input class="form-check-input check_p2_1_1_a"
+                                                                                       type="checkbox" id="p2_1_1_c"
+                                                                                       th:field="*{coar_ficha_s2.p2_1_1_c}"
                                                                                        value="S"
-                                                                                       th:checked="${ficha.coar_ficha_s2.p7_4_2_c == 'S' }"/>
+                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_1_c == 'S' }"
+                                                                                       th:onchange="validar_check_p2_1_1_a()"/>
+                                                                                <label class="form-check-label">
+                                                                                    c) Documento desactualizado o vencido
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br/>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                    <div class="row mb-3">
+                                                                        <label class="col-xs-12 col-sm-12 col-md-3 col-lg-12 col-form-label">
+                                                                            1.2. Si falta alguno de los documentos descritos en 1.1, indique cuál, según el motivo.</label>
+                                                                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-9">
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input check_p2_1_2_a"
+                                                                                       type="checkbox" id="p2_1_2_a"
+                                                                                       th:field="*{coar_ficha_s2.p2_1_2_a}"
+                                                                                       value="S"
+                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_2_a == 'S' }"
+                                                                                       />
+                                                                                <label class="form-check-label">
+                                                                                    a) Documento en trámite
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input check_p2_1_2_a"
+                                                                                       type="checkbox" id="p2_1_2_b"
+                                                                                       th:field="*{coar_ficha_s2.p2_1_2_b}"
+                                                                                       value="S"
+                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_2_b == 'S' }"/>
+                                                                                <label class="form-check-label">
+                                                                                    b) No se ha gestionado el documento
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input check_p2_1_2_a"
+                                                                                       type="checkbox" id="p2_1_2_c"
+                                                                                       th:field="*{coar_ficha_s2.p2_1_2_c}"
+                                                                                       value="S"
+                                                                                       th:checked="${ficha.coar_ficha_s2.p2_1_2_c == 'S' }"
+                                                                                       onchange="validar_check_p2_1_2_a()"/>
                                                                                 <label class="form-check-label">
                                                                                     c) Certificado de Inspección Técnica de Seguridad en Edificaciones (ITSE)
                                                                                 </label>
@@ -549,8 +593,6 @@ and open the template in the editor.
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-
                                                             <br/>
                                                            <div class="accordion-item" >
                                                                 <div class="d-flex justify-content-between">

@@ -2,7 +2,6 @@
 var requestContextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
 var urlx = requestContextPath + "/dp/ficha/formulario";
 
-
 $(document).ready(function () {
    // calcularSumaP1_3();
    initializeDateField();
@@ -11,6 +10,7 @@ $(document).ready(function () {
         statusCode: {
             401: function () {
                 window.location = requestContextPath + '/406';
+
             }
         }
     });
@@ -26,10 +26,12 @@ $(document).ready(function () {
     //validarCheckboxes(); 
     //inicializarValidacion(); 
     //colocarRequiredEnInputs();
-    
+
 
     aplicarFormatoFecha();
     aplicarFormatoFecha2();
+    validar_check_p2_1_1_a();
+    validar_check_p2_1_2_a();
 
    
 
@@ -7066,3 +7068,35 @@ function toggleTextareaEnabled3_2() {
         p3_2_detalle.value = "";
     }
 }
+
+///////////SECCION 02 ////////////
+
+///////// 1.1
+/////REQUERIDO LOS CHECKBOX
+$(document).on('change', '.check_p2_1_1_a', function () {
+    validar_check_p2_1_1_a();
+});
+function validar_check_p2_1_1_a() {
+    if ($('.check_p2_1_1_a:checked').length > 0) {  // the "> 0" part is unnecessary, actually
+        $('.check_p2_1_1_a').prop('required', false);
+    } else {
+        $('.check_p2_1_1_a').prop('required', true);
+    }
+}
+/////////// FIN 1.1 /////
+///////// 1.2 /////
+/////REQUERIDO LOS CHECKBOX
+$(document).on('change', '.check_p2_1_2_a', function () {
+    validar_check_p2_1_2_a();
+});
+function validar_check_p2_1_2_a() {
+    if ($('.check_p2_1_2_a:checked').length > 0) {  // the "> 0" part is unnecessary, actually
+        $('.check_p2_1_2_a').prop('required', false);
+    } else {
+        $('.check_p2_1_2_a').prop('required', true);
+    }
+}
+/////////// FIN 1.2 /////
+
+
+////////// FIN SECCION 02 ///////
