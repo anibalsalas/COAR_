@@ -361,7 +361,6 @@ and open the template in the editor.
                                                                     <input type="hidden" id="flag_ie" />
                                                                     <input type="hidden" id="msg_modal_ie" />
                                                                     <input type="hidden" id="id_sestablecmnt" th:field="*{id_sestablecmnt}" />
-
                                                                 </div>
 
                                                              
@@ -501,11 +500,57 @@ and open the template in the editor.
                                                             <input type="hidden" th:field="*{coar_ficha_s2.usu_actualiza}"/>
                                                             <input type="hidden" th:field="*{coar_ficha_s2.fch_actualiza}"/>
                                                             <input type="hidden" th:field="*{coar_ficha_s2.usu_valida}"/>
-                                                            <input type="hidden" th:field="*{coar_ficha_s2.fch_valida}"/> 
-                                                            
-                                                           <b>KENNER </b>
+                                                            <input type="hidden" th:field="*{coar_ficha_s2.fch_valida}"/>
 
-                                                            
+                                                            <div class="card"
+                                                                 style="margin-bottom: 30px; border: 0; border-radius: 5px; box-shadow: 0 0 30px rgba(1, 41, 112, 0.1);">
+                                                                <div class="card-header" style="margin-left:30px;">
+                                                                    <b>1.</b> DOCUMENTOS LEGALES Y ADMINISTRATIVOS
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                    <div class="row mb-3">
+                                                                        <label class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-form-label">
+                                                                            1.1. ¿El COAR cuenta con Certificados y Registros
+                                                                            necesarios para su funcionamiento? (Opción Múltiple)</label>
+                                                                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input check_coar_ficha_s2"
+                                                                                       type="checkbox" id="coar_ficha_s2"
+                                                                                       th:field="*{coar_ficha_s2.p7_4_2_a}"
+                                                                                       value="S"
+                                                                                       th:checked="${ficha.coar_ficha_s2.p7_4_2_a == 'S' }"/>
+                                                                                <label class="form-check-label">
+                                                                                    a) Autorización de funcionamiento emitida por la DRE - MINEDU
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input check_p7_4_2_a"
+                                                                                       type="checkbox" id="p7_4_2_b"
+                                                                                       th:field="*{coar_ficha_s2.p7_4_2_b}"
+                                                                                       value="S"
+                                                                                       th:checked="${ficha.coar_ficha_s2.p7_4_2_b == 'S' }"/>
+                                                                                <label class="form-check-label">
+                                                                                    b) Registro en el Sistema de Registro Nacional de Instituciones Educativas (RIE)
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input check_p7_4_2_a"
+                                                                                       type="checkbox" id="p7_4_2_c"
+                                                                                       th:field="*{coar_ficha_s2.p7_4_2_c}"
+                                                                                       value="S"
+                                                                                       th:checked="${ficha.coar_ficha_s2.p7_4_2_c == 'S' }"/>
+                                                                                <label class="form-check-label">
+                                                                                    c) Certificado de Inspección Técnica de Seguridad en Edificaciones (ITSE)
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
                                                             <br/>
                                                            <div class="accordion-item" >
                                                                 <div class="d-flex justify-content-between">

@@ -44,7 +44,24 @@ public class Demuna_Ficha_S2Entity implements Serializable {
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fch_valida;
-   
+
+    private String p2_1_1_a;
+    private String p2_1_1_b;
+    private String p2_1_1_c;
+    private String p2_1_2_a;
+    private String p2_1_2_a_1;
+    private String p2_1_2_a_2;
+    private String p2_1_2_b;
+    private String p2_1_2_c;
+    private String p2_1_3_a;
+    private String p2_1_3_b;
+    private String p2_1_3_c;
+    private String p2_1_3_d;
+    private String p2_1_3_e;
+    private String p2_1_3_f;
+    private String p2_1_4_a;
+    private String p2_1_4_b;
+    private String p2_1_4_c;
 
     
     
