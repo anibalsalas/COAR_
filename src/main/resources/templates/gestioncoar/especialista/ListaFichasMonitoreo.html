@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+--> 
+
+<html lang="es" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org" 
+      layout:decorate="~{fragment/templateIndex}">
+
+    <head>
+        <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Monitoreo de registros</title> 
+        <!--Css plusnet -->
+        <link rel="stylesheet" th:href="@{/css/plusnet/plusnet.css}" type="text/css"/>
+        <!-- Datatables -->
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"     />
+        <link rel="stylesheet" th:href="@{/webjars/datatables/1.13.2/css/dataTables.bootstrap5.min.css}"/>
+        <link rel="stylesheet" th:href="@{/webjars/datatables.net-responsive-bs5/2.2.9/css/responsive.bootstrap5.min.css}"/>
+        <link rel="stylesheet" th:href="@{/webjars/datatables.net-buttons-bs5/2.3.6/css/buttons.bootstrap5.min.css}"/>
+    </head>
+    <body>
+        <div layout:fragment="content"> 
+            <div class="pagetitle">
+                <h1>Monitoreo de Registros</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Gesti&oacute;n</li>
+                        <li class="breadcrumb-item">Monitoreo y supervisi&oacute;n</li>
+                        <li class="breadcrumb-item active">Monitorear</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
+
+            <section class="section">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title"></h5>
+
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="row mb-3">
+                                                    <div id="div_cuadro_comparativo" class="table-responsive">
+                                                        <table id="datatable_fichas" class="table table-hover table-sm table-bordered nowrap" style="width:100%">
+                                                            <thead>
+                                                                <tr class="table-primary">
+                                                                    <th style="text-align: center;">Regi&oacute;n</th>
+                                                                    <th style="text-align: center;">Registradas Completas</th>
+                                                                    <th style="text-align: center;">Registradas Incompletas</th>
+                                                                    <th style="text-align: center;">Faltan registar</th>
+                                                                  
+                                                                    <th style="text-align: center;">Total </th>
+                                                                    <th style="text-align: center;">%Porcentaje de avance</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody  th:each="item, row : ${listaCuadro}" th:remove="tag">
+                                                                <tr>
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                        <span th:text="${item.region}"></span>
+                                                                    </td>
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                        <span th:text="${item.dir_comp}"></span>
+                                                                    </td>
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                        <span th:text="${item.dir_incom}"></span>
+                                                                        </td>
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                      
+                                                                       <span th:text="${item.tot_cole - (item.dir_comp + item.dir_incom)}"></span>
+                                                                    </td>
+                                                                    
+                                                                   
+                                                                    
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                        <span th:text="${item.tot_cole}"></span>
+                                                                    </td>
+
+
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                        <span th:text="${#numbers.formatDecimal(item.procent_total*100, 1, 'COMMA', 2, 'POINT')} + ' %'"></span>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" th:style="${'width:' + #numbers.formatDecimal(item.procent_total*100, 1, 'COMMA', 2, 'POINT') + '%'}"></div>
+                                                                        </div>
+                                                                    </td>                                            
+                                                                </tr>
+                                                            </tbody>
+                                                           <tfoot>
+                                                                <tr class="table-warning">
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                        <strong><span>TOTAL</span></strong>
+                                                                    </td>
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                       <!-- <strong><span th:text="${#aggregates.sum(listaCuadro.![dir_comp])}"></span></strong>-->
+                                                                           <strong><span   th:text="${#lists.isEmpty(listaCuadro) ? 'No hay datos' : #aggregates.sum(listaCuadro.![dir_comp])}"></span></strong>
+                                                                    </td>
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                        <strong><span      th:text="${#lists.isEmpty(listaCuadro) ? 'No hay datos' :#aggregates.sum(listaCuadro.![dir_incom])}"></span></strong>
+                                                                        <!--strong><span th:text="${#aggregates.sum(listaCuadro.![tot_cole]) - #aggregates.sum(listaCuadro.![dir_comp])}"></span></strong-->
+                                                                    </td>
+                                                                 
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                        
+                                                                          <strong><span th:text="${#lists.isEmpty(listaCuadro) ? 'No hay datos' :#aggregates.sum(listaCuadro.![tot_cole]) - (#aggregates.sum(listaCuadro.![dir_comp]) + #aggregates.sum(listaCuadro.![dir_incom]))}"></span></strong>      
+                                                                           
+                                                                    </td>
+                                                                    
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                        <strong><span th:text="${#lists.isEmpty(totalCuadro) ? 'No hay datos' :#aggregates.sum(listaCuadro.![tot_cole])}"></span></strong>
+                                                                    </td>
+                                                                    <td style="text-align: center;vertical-align: middle">
+                                                                        <!--<span th:text="${txt_total_porcent}"></span>-->
+                                                                        <span th:text="${#numbers.formatDecimal(total_porcent, 1, 'COMMA', 2, 'POINT')} + ' %'"></span>
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" th:style="${'width:' + #numbers.formatDecimal(total_porcent, 1, 'COMMA', 2, 'POINT') + '%'}"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> 
+            <!-- End row -->
+
+
+            <!-- Jquery -->
+            <script th:src="@{/webjars/jquery/3.6.3/jquery.min.js}" type="text/javascript"></script>
+
+            <!-- Datatables -->
+            <script th:src="@{/webjars/datatables/1.13.2/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables/1.13.2/js/dataTables.bootstrap5.min.js}" type="text/javascript"></script>
+
+            <!-- Datatables buttons-->
+            <script th:src="@{/webjars/datatables.net-buttons/2.3.6/js/dataTables.buttons.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables.net-buttons-bs5/2.3.6/js/buttons.bootstrap5.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/jszip/3.10.1/jszip.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/pdfmake/0.1.72/build/pdfmake.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/pdfmake/0.1.72/build/vfs_fonts.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables.net-buttons/2.3.6/js/buttons.html5.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables.net-buttons/2.3.6/js/buttons.print.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables.net-buttons/2.3.6/js/buttons.colVis.min.js}" type="text/javascript"></script>
+
+            <!-- Datatables responsive-->
+            <script th:src="@{/webjars/datatables.net-responsive/2.4.0/js/dataTables.responsive.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables.net-responsive-bs5/2.2.9/js/responsive.bootstrap5.min.js}" type="text/javascript"></script>
+
+            <!--jscript lista atencion -->
+            <script th:src="@{/js/gestioncoar/especialista/ficha_lista_monitoreo.js}" type="text/javascript"></script>
+
+        </div> <!-- End content -->
+    </body>    
+</html>

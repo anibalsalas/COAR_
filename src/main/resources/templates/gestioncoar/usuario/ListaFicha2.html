@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+--> 
+
+<html lang="es" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org" 
+      layout:decorate="~{fragment/templateIndex}">
+
+    <head>
+        <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Listado de Fichas</title> 
+        <!--Css plusnet -->
+        <link rel="stylesheet" th:href="@{/css/plusnet/plusnet.css}" type="text/css"/>
+        <!-- Datatables -->
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"     />
+        <link rel="stylesheet" th:href="@{/webjars/datatables/1.13.2/css/dataTables.bootstrap5.min.css}"/>
+        <link rel="stylesheet" th:href="@{/webjars/datatables.net-responsive-bs5/2.2.9/css/responsive.bootstrap5.min.css}"/>
+        <link rel="stylesheet" th:href="@{/webjars/datatables.net-buttons-bs5/2.3.6/css/buttons.bootstrap5.min.css}"/>
+    </head>
+    <body>
+        <div layout:fragment="content"> 
+            <div class="pagetitle">
+                <h1>Lista de Fichas</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Supervisi&oacute;n IE</li>
+                        <li class="breadcrumb-item">Registrar ficha</li>
+                        <li class="breadcrumb-item active">Lista de fichas</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
+
+            <section class="section">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <!--                        <div class="row" th:if="${flag_0022}">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title"></h5>
+                        
+                                                                <div class="row mb-3">
+                                                                    <label class="col-form-label col-xs-12 col-sm-2 col-md-2 col-lg-2">ODs/MODs</label>
+                                                                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                                                        <select id="codi_depe_tde"class="form-select" aria-label="Default select example">
+                                                                            <option value="00">TODOS</option>
+                                                                            <option th:each  = "u : ${listaOdsMods}"
+                                                                                    th:value = "${u.codi_depe_tde}"
+                                                                                    th:utext = "${#strings.toUpperCase(u.desc_depe_tde)}"></option>
+                                                                        </select>
+                                                                    </div>
+                        
+                                                                    <label class="col-form-label col-xs-12 col-sm-2 col-md-2 col-lg-2">Registrado por:</label>
+                                                                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                                                        <select id="tipo_ficha" class="form-select" aria-label="Default select example">
+                                                                            <option value="00">TODOS</option>
+                                                                            <option value="01">COMISIONADO/A</option>
+                                                                            <option value="02">DIRECTOR/A</option>
+                                                                        </select>
+                                                                    </div>
+                        
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div id="loader_fichas" style="display: none;">
+                                            <center>
+                                                <div class="loader"></div>
+                                                <h2 class="color_procesando">Procesando...</h2>
+                                            </center>
+                                        </div>
+                                        <div id="card_tabla">
+                                            <h5 class="card-title"></h5>
+                                            <div class="accordion-item" th:if="${session.rol_usuario.equals('ROL_DIRECTOR')}"> 
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <button id          ="btn_insertar_viaticos"
+                                                        title       ="Insertar"
+                                                        class       ="btn btn-primary"
+                                                        th:onclick="|window.location.href='@{/dp/usuario/ficha/insertarFichas}'|"
+                                                        type        ="button"><i class="fa-solid fa-circle-plus"></i> Insertar</button>
+                                            </div>
+                                            </div>
+                                            <br/>
+                                            <div class="p-1 bg-secondary w-100"></div>
+                                            <br/>
+
+
+                                            <div id="div_tabla_fichas" th:fragment="data_lista_fichas">
+                                                <div class="table-responsive">
+
+                                                    <table id="datatable_fichas" class="table table-hover" style="width:100%">
+                                                        <!--                                                <table id="datatable_fichas" class="table table-hover table-sm table-bordered dt-responsive nowrap" style="width:100%">-->
+                                                        <thead>
+                                                            <tr class="table-primary">
+                                                                <th style="text-align: center;">#</th>
+                                                                <th style="text-align: center;">Editar</th>
+                                                                <th style="text-align: center;">Estado</th>
+                                                                <th style="text-align: center;">Nombre de la Entidad</th>
+
+
+                                                                <th style="text-align: center;">Región</th>
+                                                                <th style="text-align: center;">Fecha Registro</th>
+
+
+                                                            </tr>
+
+                                                        </thead>
+                                                        <tbody  th:each="item, row : ${listaFichasDemuna}" th:remove="tag">
+                                                            <tr>
+                                                                <td style="text-align: center;vertical-align: middle; width: 3%">
+                                                                    <span th:text="${item.id_ficha}"></span>
+                                                                </td>
+                                                                <td style="text-align: center;vertical-align: middle; width: 3%">
+                                                                    <a class="btnn" th:href="@{/dp/usuario/ficha/editarFichas(id_ficha=${item.id_ficha})}" title="Editar"> <i class="fa-solid fa-pen-to-square"></i></a>
+                                                                </td>
+                                                                <td style="text-align: center;vertical-align: middle; width: 3%">
+                                                                    <strong><span th:text="${item.txt_estado_ficha}" th:class="${item.estado.equals('I') ? 'badge bg-danger':item.estado.equals('C')? 'badge bg-success': item.estado.equals('0') ? 'badge bg-warning text-dark':'badge bg-success' }"></span></strong>                    
+                                                                </td> 
+                                                            
+                                                                <td style="text-align: left;vertical-align: middle; width: 20%">
+                                                                    <span th:text="${item.nom_entidad}"></span>
+                                                                </td>
+                                                                <td style="text-align: center;vertical-align: middle; width: 3%">
+                                                                    <span th:text="${item.departamento_educa}"></span>
+                                                                </td>
+                                                            
+                                                                <td style="text-align: center;vertical-align: middle; width: 3%">
+                                                                    <span th:text="${item.fch_registro}"></span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                            <!--MODAL INFORMACION-->
+                                            <div id="mdl_confirmacion" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+                                                <div class="modal-dialog">
+                                                    <!--Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                                                            <h4 class="modal-title">Confirmaci&oacute;n</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <input id="mdl_id_ficha" type="hidden"></input>
+                                                            <strong><p><label id="mdl_confirmacion_txt_info"></label></p></strong>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button id="btn_aceptar_modal_confirmacion" type="button" class="btn btn-success" onclick="eliminarFicha()">
+                                                                <i class="fa-solid fa-square-check"></i> Aceptar</button>
+                                                            <button id="btn_cerrar_modal_confirmacion" type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                                                <i class="fa-solid fa-rectangle-xmark"></i> Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--FIN MODAL INFORMACION-->
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+                    </div>
+                </div> <!-- End row -->
+            </section> 
+
+            <!-- Jquery -->
+            <script th:src="@{/webjars/jquery/3.6.3/jquery.min.js}" type="text/javascript"></script>
+
+            <!-- Datatables -->
+            <script th:src="@{/webjars/datatables/1.13.2/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables/1.13.2/js/dataTables.bootstrap5.min.js}" type="text/javascript"></script>
+
+            <!-- Datatables buttons-->
+            <script th:src="@{/webjars/datatables.net-buttons/2.3.6/js/dataTables.buttons.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables.net-buttons-bs5/2.3.6/js/buttons.bootstrap5.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/jszip/3.10.1/jszip.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/pdfmake/0.1.72/build/pdfmake.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/pdfmake/0.1.72/build/vfs_fonts.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables.net-buttons/2.3.6/js/buttons.html5.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables.net-buttons/2.3.6/js/buttons.print.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables.net-buttons/2.3.6/js/buttons.colVis.min.js}" type="text/javascript"></script>
+
+            <!-- Datatables responsive-->
+            <script th:src="@{/webjars/datatables.net-responsive/2.4.0/js/dataTables.responsive.min.js}" type="text/javascript"></script>
+            <script th:src="@{/webjars/datatables.net-responsive-bs5/2.2.9/js/responsive.bootstrap5.min.js}" type="text/javascript"></script>
+
+            <!--jscript lista atencion -->
+            <script th:src="@{/js/gestioncoar/usuario/ficha_lista.js}" type="text/javascript"></script>
+
+
+
+        </div> <!-- End content -->
+    </body>    
+</html>

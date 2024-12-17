@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato_encargos_01" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="862d7bf7-f8f9-49d0-a7f9-2987a4755e86">
+	<property name="ireport.zoom" value="6.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="NRO_SOLICITUD" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT   DRE_ACTIVIDAD_RESULTADO.DESC_CORT_ACT,
+         DRE_ACTIVIDAD_RESULTADO.DESC_ACTI_ACT,
+         CONCEPTO_PLANILLA_VIATICOS.CLAS_GAST_GAS,
+         CONCEPTO_PLANILLA_VIATICOS.DESC_CONC_PVI,
+         DETALLE_CONCEPTO_ENCARGO.NRO_DIAS_PVI,
+         DETALLE_CONCEPTO_ENCARGO.MNTO_PLA_PVI,
+         DETALLE_CONCEPTO_ENCARGO.NRO_PERS_PVI,
+         (DETALLE_CONCEPTO_ENCARGO.NRO_DIAS_PVI * DETALLE_CONCEPTO_ENCARGO.MNTO_PLA_PVI * DETALLE_CONCEPTO_ENCARGO.NRO_PERS_PVI) SUMA_TOTAL
+    FROM CONCEPTO_PLANILLA_VIATICOS,
+         DETALLE_CONCEPTO_ENCARGO,
+         DETALLE_DONACION_ENCARGO,
+         ENCARGOS,
+         CATEGORIA,
+         DRE_ACTIVIDAD_RESULTADO
+   WHERE TRIM(ENCARGOS.NRO_FORM_PVI) = $P{NRO_SOLICITUD} and
+         ENCARGOS.NRO_FORM_PVI  = DETALLE_DONACION_ENCARGO.NRO_FORM_PVI  and
+         DETALLE_DONACION_ENCARGO.NRO_FORM_PVI = DETALLE_CONCEPTO_ENCARGO.NRO_FORM_PVI  and
+         DETALLE_DONACION_ENCARGO.NUME_ITEM_VID = DETALLE_CONCEPTO_ENCARGO.NUME_ITEM_VID  and
+         DETALLE_CONCEPTO_ENCARGO.CODI_CONC_PVI = CONCEPTO_PLANILLA_VIATICOS.CODI_CONC_PVI  and
+         DETALLE_DONACION_ENCARGO.NUME_PRES_CPR = CATEGORIA.NUME_PRES_CPR  and
+         DETALLE_DONACION_ENCARGO.NUME_PROY_CPY = CATEGORIA.NUME_PROY_CPY  and
+         DETALLE_DONACION_ENCARGO.ANNO_EJEC_EJE = CATEGORIA.PERI_CRON_CRD  and
+         DETALLE_DONACION_ENCARGO.CODI_CATE_CAT = CATEGORIA.CODI_CATE_CAT  and
+         CATEGORIA.PERI_CRON_CRD = DRE_ACTIVIDAD_RESULTADO.ANNO_EJEC_EJE  and
+         CATEGORIA.CODI_ACTI_ACT = DRE_ACTIVIDAD_RESULTADO.CODI_ACTI_ACT
+ORDER BY DRE_ACTIVIDAD_RESULTADO.DESC_CORT_ACT, DRE_ACTIVIDAD_RESULTADO.DESC_ACTI_ACT, DESC_CONC_PVI]]>
+	</queryString>
+	<field name="DESC_CORT_ACT" class="java.lang.String"/>
+	<field name="DESC_ACTI_ACT" class="java.lang.String"/>
+	<field name="CLAS_GAST_GAS" class="java.lang.String"/>
+	<field name="DESC_CONC_PVI" class="java.lang.String"/>
+	<field name="NRO_DIAS_PVI" class="java.math.BigDecimal"/>
+	<field name="MNTO_PLA_PVI" class="java.math.BigDecimal"/>
+	<field name="NRO_PERS_PVI" class="java.math.BigDecimal"/>
+	<field name="SUMA_TOTAL" class="java.math.BigDecimal"/>
+	<variable name="SUMA_TOTAL_1" class="java.math.BigDecimal" resetType="Group" resetGroup="DESC_CORT_ACT" calculation="Sum">
+		<variableExpression><![CDATA[$F{SUMA_TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="SUMA_TOTAL_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SUMA_TOTAL}]]></variableExpression>
+	</variable>
+	<group name="DESC_CORT_ACT">
+		<groupExpression><![CDATA[$F{DESC_CORT_ACT}.trim()+$F{DESC_ACTI_ACT}.trim()]]></groupExpression>
+		<groupHeader>
+			<band height="10">
+				<textField>
+					<reportElement uuid="2ec6403d-5c70-4d92-91fb-1df0c34a5a05" x="1" y="-1" width="205" height="11"/>
+					<box>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement>
+						<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DESC_CORT_ACT}+" "+$F{DESC_ACTI_ACT}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="DESC_CORT_ACT" pattern="#,##0.00">
+					<reportElement uuid="8309d8e5-5ccf-4437-9da9-5566ae98ac70" x="497" y="-1" width="58" height="11"/>
+					<box rightPadding="1">
+						<leftPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUMA_TOTAL_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="3f49e367-e650-4bab-8c34-91dcd1e14df7" x="383" y="-1" width="49" height="11"/>
+					<box>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4a7887d1-1470-42d5-beac-f110960a0203" x="330" y="-1" width="53" height="11"/>
+					<box>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="14fa9f20-7b29-4eac-b75b-aadb523c674b" x="237" y="-1" width="93" height="11"/>
+					<box>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="19" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="caca2401-838a-444d-8c4c-2aaad6c2f6cb" x="1" y="0" width="205" height="18"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[CONCEPTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="79376a07-538a-4e92-ba7b-64d5b0e97f2d" x="206" y="0" width="124" height="18"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="6"/>
+				</textElement>
+				<text><![CDATA[CLASIFICADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0aee5742-1465-4782-9bad-8388275a0ad2" x="330" y="0" width="53" height="18"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="6"/>
+				</textElement>
+				<text><![CDATA[NRO. PERSONAS / EQUIPOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d5c92c10-0977-419d-ae08-7434f20408ec" x="383" y="0" width="49" height="18"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[NRO. DIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a4b79cf1-bedc-4f68-97cc-eeb6a4818d5b" x="432" y="0" width="65" height="18"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[MONTO S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d668e014-9bbd-4b14-8227-19c6b42f7029" x="497" y="0" width="58" height="18"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[MONTO TOTAL S/.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement uuid="90434636-e74e-4a7b-82ee-6b2c30564957" x="16" y="0" width="190" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESC_CONC_PVI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="XX.XX.XX.XX.XX.XX">
+				<reportElement uuid="f142700a-281c-41aa-b75a-d70a984f8375" x="206" y="0" width="124" height="10"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLAS_GAST_GAS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="6402de20-ff09-4533-b34c-dfb07e989bc7" x="330" y="0" width="53" height="10"/>
+				<box rightPadding="1">
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_PERS_PVI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="5c48afae-b669-42d0-93bc-6a5bfa64616a" x="383" y="1" width="49" height="9"/>
+				<box rightPadding="1"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_DIAS_PVI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="05265e58-d5c1-428a-a2f7-ce4e1d7a1250" x="432" y="0" width="65" height="10"/>
+				<box rightPadding="1">
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MNTO_PLA_PVI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="916bab1b-d83b-4e4d-8f6b-c6f7f0325c1f" x="497" y="0" width="58" height="10"/>
+				<box rightPadding="1">
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUMA_TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d8ab3f3f-d315-419d-9c90-e593d307c52b" x="1" y="0" width="14" height="10"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="c96d669c-50f6-4564-8462-f666b58d1724" x="1" y="0" width="496" height="10"/>
+				<box leftPadding="0" rightPadding="1">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="a509b711-b0ae-4731-acdb-b58fdcc3dffd" x="497" y="0" width="58" height="10"/>
+				<box rightPadding="1">
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUMA_TOTAL_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

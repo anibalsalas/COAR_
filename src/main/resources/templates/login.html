@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="es" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <title>Supervisi&oacute;n COAR</title>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="icon" th:href="@{/image/favicon.ico}" type="image/ico" />
+        <!-- Bootstrap -->
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>        
+        <link rel="stylesheet" th:href="@{/css/bootstrap-icons.css}"/>        
+        <link rel="stylesheet" th:href="@{/css/custom.min.css}"/>
+        <!-- Font Awesome -->
+        <link rel="stylesheet"th:href="@{/webjars/fortawesome__fontawesome-free/6.4.0/css/all.min.css}" />
+
+        <script th:src="@{/webjars/jquery/3.6.3/jquery.min.js}" ></script>
+        <script th:src="@{/webjars/jquery.inputmask/5.0.7/jquery.inputmask.min.js}"></script>     
+    </head>
+    <body>
+        <main>       
+            <div class="container fondo-full">
+                <div class="d-flex" >
+                    <div class="flex-shrink-0" style="flex-basis: 20%;">
+                        <img src="image/logo_defensoria.png" class="img-fluid logo-img">
+                    </div>
+                    <div class="flex-grow-1" style="flex-basis: 80%;">
+                        <!-- Empty space on the right -->
+                    </div>
+                </div>
+                <section class="section register  d-flex flex-column align-items-center justify-content-center py-4">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                                <!--div class="d-flex justify-content-center py-4">                                    
+                                    <span class="d-none d-lg-block"  th:text="." id="msg" ></span> 
+                                </div -->
+
+                                <div class="card mb-3">
+
+                                    <div class="card-body">
+
+                                        <div class="pt-4 pb-2">
+                                            <center> <span class="d-none d-lg-block"  th:text="." id="msg" ></span> </center>
+                                            <h5 class="card-title text-center pb-0 fs-4">Acceder al sistema</h5>
+                                            <p class="text-center small">Ingrese usuario y contraseña</p>
+                                        </div>
+
+                                        <form class="row g-3 needs-validation" method="POST" th:action="@{/login}">
+                                            <p style="color:#084298; font-weight: bold; font-size:20px;" class="text-center">
+                                               Supervisión del Modelo de Servicio Educativo para la atención de estudiantes con habilidades sobresalientes y alto desempeño académico, artístico y/o deportivo - COAR</p>
+                                            <!-- h1 class="text-center">PAPELETAS</h1 -->
+
+
+                                            <div class="col-12">
+                                                <div class="input-group mb-2">
+                                                    <select id="tipo_usuario" name="tipo_usuario" class="form-select">
+                                                        <option value="A">USUARIO DP</option>
+                                                        <!--option value="B">USUARIO EXTERNO</option-->
+                                                        <option value="C">ESPECIALISTA DP</option>
+                                                    </select>
+                                                    <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-filter"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="input-group mb-2">
+                                                    <input id="username" name="username" type="text" class="form-control form-control-sm" placeholder="Usuario" th:required="true"/>
+                                                    <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-user"></i></span>
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div class="col-12">
+                                                <div class="input-group mb-2">
+                                                    <input size="20" th:minlength="4" th:maxlength="40"
+                                                           id="password" name="password" type="password" 
+                                                           class="form-control form-control-sm" placeholder="Contraseña" th:required="true"/>
+                                                    <span class="input-group-text" id="basic-addon2" onclick="togglePasswordVisibility()">
+                                                        <i class="fa-solid fa-key" id="toggleIcon"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                               <div class="col-12 div_cod_unico">
+                                                <div class="input-group mb-2">
+                                                    <input id="cod_unico" name="cod_unico" minlength="13" maxlength="13" type="number" class="form-control form-control-sm" placeholder="N&deg; Codigo COAR" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"/>
+                                                    <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-building"></i></span>
+                                                </div>
+                                            </div>
+
+                                         
+                                            <div class="col-12">
+                                                <!-- div class="form-check" -->
+                                                <input class="form-check-input" id="remember-me" name="remember-me" type="checkbox"></input>   
+                                                <label class="form-check-label" for="rememberMe">Permanecer conectado</label>
+                                                <!-- /div-->
+                                            </div>
+
+                                            <!--div class="col-12">
+                                                <button class="btn btn-primary w-100" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Ingresar</button>
+                                            </div-->
+                                             <div class="col-12 align-buttonx"> 
+                                                 <button class="buttonx" type="submit">
+                                                    <svg
+                                                      height="24"
+                                                      width="24"
+                                                      viewBox="0 0 24 24"
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                      <path d="M0 0h24v24H0z" fill="none"></path>
+                                                      <path
+                                                        d="M5 13c0-5.088 2.903-9.436 7-11.182C16.097 3.564 19 7.912 19 13c0 .823-.076 1.626-.22 2.403l1.94 1.832a.5.5 0 0 1 .095.603l-2.495 4.575a.5.5 0 0 1-.793.114l-2.234-2.234a1 1 0 0 0-.707-.293H9.414a1 1 0 0 0-.707.293l-2.234 2.234a.5.5 0 0 1-.793-.114l-2.495-4.575a.5.5 0 0 1 .095-.603l1.94-1.832C5.077 14.626 5 13.823 5 13zm1.476 6.696l.817-.817A3 3 0 0 1 9.414 18h5.172a3 3 0 0 1 2.121.879l.817.817.982-1.8-1.1-1.04a2 2 0 0 1-.593-1.82c.124-.664.187-1.345.187-2.036 0-3.87-1.995-7.3-5-8.96C8.995 5.7 7 9.13 7 13c0 .691.063 1.372.187 2.037a2 2 0 0 1-.593 1.82l-1.1 1.039.982 1.8zM12 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+                                                        fill="currentColor"
+                                                      ></path>
+                                                    </svg>
+                                                    <span>Ingresar</span>
+                                                  </button>
+                                            </div>
+                                            <div class="text-center" th:if="${param.error}">
+                                                <label   style="font-size:large; color: red;">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</label> 
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="credits">
+                                    <label class="text-center"> &copy; 2025 Derechos reservados. OTITD</label>
+                                    <br>
+                                        <div class="text-center">
+                                            <a href="https://www.defensoria.gob.pe/">  Defensor&iacute;a del Pueblo</a>
+                                            <!--<img th:src="@{/image/logo.png}" width="20" height="20">-->
+                                        </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <script type="text/javascript">
+
+
+                $(document).ready(function () {
+
+                    validar_tipo_usuario();
+
+                    $(document).on('change', '#tipo_usuario', function () {
+                        validar_tipo_usuario();
+                        $("#cod_unico").val("");
+                    });
+                });
+
+                function validar_tipo_usuario() {
+
+                    var tipo_usuario = $("#tipo_usuario").val();
+
+                    if (tipo_usuario === "A") {//usuario de la dp
+
+                        $(".div_cod_unico").show();
+                        $(".div_tipo_ficha").show();
+                        $("#cod_unico").prop("required", true);
+
+                    } else if (tipo_usuario === "B") {//usuario externo
+                        $(".div_cod_unico").hide();
+                        $(".div_tipo_ficha").show();
+                        $("#cod_unico").prop("required", false);
+
+                    } else if (tipo_usuario === "C") {//epecialista externo
+                        $(".div_cod_unico").hide();
+                        $(".div_tipo_ficha").show();
+                        
+                        $("#cod_unico").prop("required", false);
+                    }
+                }
+
+                var getBrowserInfo = function () {
+                    var ua = navigator.userAgent, tem,
+                            M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+                    if (/trident/i.test(M[1])) {
+                        tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+                        return 'IE ' + (tem[1] || '');
+                    }
+                    if (M[1] === 'Chrome') {
+                        tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+                        if (tem != null)
+                            return tem.slice(1).join(' ').replace('OPR', 'Opera');
+                    }
+                    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+                    if ((tem = ua.match(/version\/(\d+)/i)) != null)
+                        M.splice(1, 1, tem[1]);
+                    return M.join(' ');
+                };
+
+                document.getElementById("msg").textContent = getBrowserInfo();
+                
+                
+                
+                
+                
+                function togglePasswordVisibility() {
+                    const passwordField = document.getElementById('password');
+                    const toggleIcon = document.getElementById('toggleIcon');
+
+                    if (passwordField.type === 'password') {
+                        passwordField.type = 'text';
+                        toggleIcon.classList.remove('fa-key');
+                        toggleIcon.classList.add('fa-eye-slash'); // Cambiar el ícono al de ocultar
+                    } else {
+                        passwordField.type = 'password';
+                        toggleIcon.classList.remove('fa-eye-slash');
+                        toggleIcon.classList.add('fa-key'); // Cambiar el ícono al de mostrar
+                    }
+                }
+            </script>
+        </main>
+    </body>
+</html>

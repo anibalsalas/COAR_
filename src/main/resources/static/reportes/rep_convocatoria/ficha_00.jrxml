@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ficha_00" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="25" bottomMargin="25" uuid="73fac81a-4e62-43af-b2d5-76c8fb7a96a5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="528"/>
+	<parameter name="SUBREPORT_DIR1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E:\\fuentes plusnet\\reportes\\convocatoria_practicantes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR2" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR3" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["E:\\fuentes plusnet\\reportes\\convocatoria_practicantes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_inscripcion" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select       (A.ape_paterno||' '||A.ape_materno||' '||A.nombres) as appnomb_aspirante,
+               (select trim(nomb_dpto_dpt) from tdepartamentos where A.cod_dep_nac = tdepartamentos.codi_depa_dpt) ||' - '|| (select trim(nomb_prov_tpr) from tprovincias    where A.cod_dep_nac = tprovincias.codi_depa_dpt and A.cod_pro_nac = codi_prov_tpr) ||' - '||(select trim(nomb_dist_tdi) from tdistritos  where A.cod_dep_nac = tdistritos.codi_depa_dpt and A.cod_pro_nac = tdistritos.codi_prov_tpr and A.cod_dis_nac = codi_dist_tdi) as LUGAR_NACIMIENTO,
+               to_char(A.fecha_nac,'dd/mm/yyyy') as sfecha_nacimiento,
+               HF.domicilio || ' - ' ||
+               (select trim(nomb_dpto_dpt) from tdepartamentos where HF.cod_dep_domi = tdepartamentos.codi_depa_dpt) || ' - ' ||
+               (select trim(nomb_prov_tpr) from tprovincias    where HF.cod_dep_domi = tprovincias.codi_depa_dpt and HF.cod_pro_domi = codi_prov_tpr) || ' - ' ||
+               (select trim(nomb_dist_tdi) from tdistritos     where HF.cod_dep_domi = tdistritos.codi_depa_dpt and HF.cod_pro_domi = tdistritos.codi_prov_tpr and HF.cod_dis_domi = codi_dist_tdi) as domicilio,
+               decode(A.tipo_doc,'01','DNI: '||A.num_documento  ,'Carnet extranjería: ' ||A.num_documento) as tipo_doc,
+
+               decode(HF.estado_civil,'S',decode(A.genero,'F','Soltera','Soltero'), decode(A.genero,'F','Casada','Casado')) as estado_civil,
+               decode(A.genero,'F','Femenino','Masculino') as genero,
+               HF.tel_cell,
+               HF.tel_fijo,
+               HF.email,
+               I.id_inscripcion,
+               C.id_convocatoria,
+               C.nro_convocatoria,
+               C.anio,
+               A.id_aspirante,
+	     A.ind_discapacidad,
+               A.tipo_discapacidad,
+               I.activo,
+               I.necesita_ajuste_discapacidad,
+	     I.detalle_ajuste_discapacidad,
+               I.redam,
+               I.rnsdd,
+               I.antecedentes_penales,
+	     I.antecedentes_policiales,
+ 	     I.antecedentes_judiciales,
+	     I.ind_sentencia_delito,
+	     I.ind_impedimento_juridico,
+               I.ind_grado_parentesco,
+               I.detalle_grado_parentesco,
+               decode(I.estado_inscripcion,'N','Nuevo','S','Seleccionado','R','Rechazado','G','Ganador') as estado_inscripcion,
+               A.activo,
+               TO_CHAR(fecha_egreso,'DD-MM-YYYY') as sfecha_egreso,
+               HF.centro_superior,hf.competencias_per,
+REPLACE(hf.conocimientos,chr(13)||chr(10),',') as conocimientos,
+REPLACE(hf.conocimiento_ofimatica,chr(13)||chr(10),',')  as conocimiento_ofimatica,hf.conocimiento_idiomas,
+	    decode(hf.promedio_academico,'00','Regular','03','Tercio Superior','05','Quinto Superior','10','Decimo Superior')
+	    as promedio_academico,
+               DECODE(hf.tipo_formacion,'U','Universitario','T', 'Tecnico') as tipo_formacion,
+               E.nombre_especialidad,
+               n.nombre_nivel_alcanzado,
+	( select count(*) from  prac_hist_experiencia HE
+	where
+          HE.id_inscripcion     =   to_number($P{id_inscripcion})
+	and HE.nombre_institucion='DEFENSORÍA DEL PUEBLO') as nro_practicas_dp,
+	( select count(*) from  prac_hist_experiencia HE
+	where
+          HE.id_inscripcion     =   to_number($P{id_inscripcion})
+	and HE.nombre_institucion!='DEFENSORÍA DEL PUEBLO') as nro_practicas_otros
+
+          from prac_convocatoria C, prac_inscripcion I,
+	prac_aspirante A, prac_hist_formacion HF, prac_especialidad E,prac_nivel_alcanzado N
+        where     I.id_inscripcion          =  to_number($P{id_inscripcion}) and
+                  C.id_convocatoria         =  I.id_convocatoria   and
+                  I.id_aspirante            =  A.id_aspirante and
+                  HF.id_inscripcion         =  I.id_inscripcion and
+                  HF.id_especiallidad       =  E.id_especialidad and
+                  hf.id_nivel_alcanzado     = N.id_nivel_alcanzado]]>
+	</queryString>
+	<field name="APPNOMB_ASPIRANTE" class="java.lang.String"/>
+	<field name="LUGAR_NACIMIENTO" class="java.lang.String"/>
+	<field name="SFECHA_NACIMIENTO" class="java.lang.String"/>
+	<field name="DOMICILIO" class="java.lang.String"/>
+	<field name="TIPO_DOC" class="java.lang.String"/>
+	<field name="ESTADO_CIVIL" class="java.lang.String"/>
+	<field name="GENERO" class="java.lang.String"/>
+	<field name="TEL_CELL" class="java.lang.String"/>
+	<field name="TEL_FIJO" class="java.lang.String"/>
+	<field name="EMAIL" class="java.lang.String"/>
+	<field name="ID_INSCRIPCION" class="java.math.BigDecimal"/>
+	<field name="ID_CONVOCATORIA" class="java.math.BigDecimal"/>
+	<field name="NRO_CONVOCATORIA" class="java.lang.String"/>
+	<field name="ANIO" class="java.lang.String"/>
+	<field name="ID_ASPIRANTE" class="java.math.BigDecimal"/>
+	<field name="IND_DISCAPACIDAD" class="java.lang.String"/>
+	<field name="TIPO_DISCAPACIDAD" class="java.lang.String"/>
+	<field name="ACTIVO" class="java.lang.String"/>
+	<field name="NECESITA_AJUSTE_DISCAPACIDAD" class="java.lang.String"/>
+	<field name="DETALLE_AJUSTE_DISCAPACIDAD" class="java.lang.String"/>
+	<field name="REDAM" class="java.lang.String"/>
+	<field name="RNSDD" class="java.lang.String"/>
+	<field name="ANTECEDENTES_PENALES" class="java.lang.String"/>
+	<field name="ANTECEDENTES_POLICIALES" class="java.lang.String"/>
+	<field name="ANTECEDENTES_JUDICIALES" class="java.lang.String"/>
+	<field name="IND_SENTENCIA_DELITO" class="java.lang.String"/>
+	<field name="IND_IMPEDIMENTO_JURIDICO" class="java.lang.String"/>
+	<field name="IND_GRADO_PARENTESCO" class="java.lang.String"/>
+	<field name="DETALLE_GRADO_PARENTESCO" class="java.lang.String"/>
+	<field name="ESTADO_INSCRIPCION" class="java.lang.String"/>
+	<field name="SFECHA_EGRESO" class="java.lang.String"/>
+	<field name="CENTRO_SUPERIOR" class="java.lang.String"/>
+	<field name="COMPETENCIAS_PER" class="java.lang.String"/>
+	<field name="CONOCIMIENTOS" class="java.lang.String"/>
+	<field name="CONOCIMIENTO_OFIMATICA" class="java.lang.String"/>
+	<field name="CONOCIMIENTO_IDIOMAS" class="java.lang.String"/>
+	<field name="PROMEDIO_ACADEMICO" class="java.lang.String"/>
+	<field name="TIPO_FORMACION" class="java.lang.String"/>
+	<field name="NOMBRE_ESPECIALIDAD" class="java.lang.String"/>
+	<field name="NOMBRE_NIVEL_ALCANZADO" class="java.lang.String"/>
+	<field name="NRO_PRACTICAS_DP" class="java.lang.Integer"/>
+	<field name="NRO_PRACTICAS_OTROS" class="java.lang.Integer"/>
+	<variable name="nro_practicas_dp" class="java.lang.Integer"/>
+	<variable name="nro_practicas_otros" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="69" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="930f000d-ee60-4982-93f8-a0f0c7300b78" x="0" y="10" width="535" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FICHA DE POSTULACIÓN PARA REALIZAR PRACTICAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e1d37996-8fcc-41d6-a53a-7e7250e2d9b3" x="0" y="29" width="535" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[LA INFORMACIÓN CONTENIDA EN EL PRESENTE DOCUMENTO TIENE CARÁCTER DE DECLARACIÓN JURADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5751e5af-12b7-47a1-9911-3ee0d9947450" x="0" y="49" width="135" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Concurso Público de Prácticas N°]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3d4e0820-38e5-4840-a0d2-69e0b5c5a405" x="134" y="49" width="173" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_CONVOCATORIA}+"-"+$F{ANIO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="458" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="64491f61-c959-4bac-9ffe-fd3098907053" x="0" y="25" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Apellidos y nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ab66c4b4-ac3d-4ef0-92b1-32d8ef61a2c1" x="0" y="38" width="165" height="26"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Lugar de nacimiento (País/ Departamento/ Provincia/ Distrito)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="388edc13-66a5-46cb-8044-ed620c13f51c" x="0" y="64" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de nacimiento (Día/Mes/Año)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9548f624-9571-4f97-a983-016f9f8711d8" x="0" y="77" width="165" height="26"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Domicilio (Departamento/ Provincia / Distrito)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f600ce54-d9f1-4eca-afeb-ad648c19e335" x="0" y="103" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Número de DNI o Carné de Extranjería]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b4b0bb11-978b-4c29-a843-88cc5d33d3af" x="0" y="116" width="165" height="13"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Estado civil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="957b7e79-0db6-434b-931d-6382fdb18fdd" x="0" y="142" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Teléfono celular ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4309c644-0e9c-4aec-a34e-92f7f056a485" x="0" y="155" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Teléfono fijo ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="707ff3fe-2949-41eb-a563-9e280cfff349" x="0" y="168" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Correo electrónico]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="89e0f999-5507-4c26-a202-e7f3d46be562" x="165" y="25" width="370" height="13"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APPNOMB_ASPIRANTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e46dc6b1-7656-45fd-b2bb-b29a9d2859df" x="165" y="38" width="370" height="26"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LUGAR_NACIMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5d3565de-224b-4d37-ac6f-d963716378fd" x="165" y="64" width="370" height="13"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SFECHA_NACIMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cb997785-fad7-426b-848c-e5a8a4c9c458" x="165" y="77" width="370" height="26"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOMICILIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="565ef20d-45d1-431c-835d-1a88ebfa5732" x="165" y="103" width="370" height="13"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO_DOC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="02ef438f-3b44-443e-9d10-df4a5df9326a" x="165" y="116" width="370" height="13"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTADO_CIVIL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f5acd055-b129-4077-b2d3-7cf1a6093050" x="165" y="142" width="370" height="13"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TEL_CELL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ffb7068d-6882-4648-a38d-c666d454e642" x="165" y="155" width="370" height="13"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TEL_FIJO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c26bee12-10a6-454d-89c5-e857710d31b8" x="165" y="168" width="370" height="13"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMAIL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ef17af80-2436-4e05-9bd9-ec41e4e3bb2d" x="0" y="181" width="535" height="20"/>
+				<box topPadding="4"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2. FORMACIÓN ACADEMICA ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dd968cac-a091-4ffd-be01-3538efaf2bcd" x="0" y="201" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Centro de Estudios]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="de065f35-4c52-48a4-a9db-b96ba037c45e" x="165" y="201" width="370" height="13"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CENTRO_SUPERIOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="20219340-ac12-4411-87ea-fc83c04f3c47" x="165" y="214" width="370" height="13"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_ESPECIALIDAD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="af1a9316-b7a8-4361-b456-dbf319252650" x="0" y="214" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Especialidad]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d368da68-d4d0-409c-bb06-17f304de7b8d" x="165" y="227" width="370" height="13"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_NIVEL_ALCANZADO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b7905354-e46c-4d46-9d49-130d14574a97" x="0" y="227" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nivel de estudios]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4300051c-da61-4988-a03d-9c5dae586274" x="165" y="240" width="370" height="13"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROMEDIO_ACADEMICO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c554a156-d511-4f4f-bae9-1127cf85f709" x="0" y="240" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Promedio Académico]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="30f07d47-2b81-464a-ac11-f97aeac6093e" x="165" y="253" width="370" height="13"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SFECHA_EGRESO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="91799c82-26ba-42ac-a350-f8c4e706ff08" x="0" y="253" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de egreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bfb4a4b4-2332-4d94-a6c8-2a107ad3c269" x="0" y="274" width="535" height="20"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3. DATOS COMPLEMENTARIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ab197ec9-c4f7-4cfe-878d-2e1825abc524" x="0" y="295" width="165" height="29"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿ En qué temas tienes conocimiento?]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="1829e3d7-3c46-43f8-bc30-a8ba8baf5d46" x="165" y="295" width="370" height="29"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONOCIMIENTOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="34f8a79e-eb95-4e55-bbd1-0b400f9a9482" x="165" y="388" width="370" height="32"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPETENCIAS_PER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="83a8009c-3997-47d4-b377-051c9832a8e8" x="0" y="388" width="165" height="32"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿Que competencias personales posees?]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="23dcf390-3cdd-4361-b063-dfa57dbb2d8a" x="165" y="129" width="370" height="13"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GENERO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bb115324-298c-4b17-824c-a015ee874cf3" x="0" y="129" width="165" height="13"/>
+				<box leftPadding="4" rightPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83a8009c-3997-47d4-b377-051c9832a8e8" x="0" y="324" width="165" height="32"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿Tienes conocimiento de Ofimática? Señale los programas y/o paquetes que maneja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83a8009c-3997-47d4-b377-051c9832a8e8" x="0" y="356" width="165" height="32"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿Tienes conocimiento de idiomas? Señale el nivel]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2051b1ec-091e-4e1d-900d-22517b2bc1c8" x="165" y="324" width="370" height="32"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONOCIMIENTO_OFIMATICA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c4e45466-6c14-478a-8a27-a0fde5f230f2" x="165" y="356" width="370" height="32"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONOCIMIENTO_IDIOMAS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0bb514c8-98a0-4808-b705-36921b68fbf5" x="0" y="0" width="535" height="23"/>
+				<box bottomPadding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1. DATOS PERSONALES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9f43df09-b767-4a74-83e6-02d05b785003" x="0" y="426" width="165" height="25"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿Has realizado prácticas en la Defensoría del Pueblo?]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="56632b46-b5b7-435f-8f3b-fc0a8d92579d" x="165" y="426" width="370" height="25"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_PRACTICAS_DP}==0?"NO":"SI"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="46">
+			<printWhenExpression><![CDATA[$F{NRO_PRACTICAS_DP}!=0]]></printWhenExpression>
+			<subreport isUsingCache="false">
+				<reportElement uuid="7909daa1-89a5-4883-aee9-41e70da905e1" x="0" y="0" width="535" height="44"/>
+				<subreportParameter name="id_inscripcion">
+					<subreportParameterExpression><![CDATA[$P{id_inscripcion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR2} + "ficha_02.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="46">
+			<staticText>
+				<reportElement uuid="43613aa2-98fb-46b6-8fa5-b20f81a62ccf" x="0" y="1" width="165" height="40"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿Has realizado prácticas preprofesionales o profesionales en otra institución pública o privada?]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="2ea3372b-6b46-4597-9572-03ae5db4b133" x="165" y="1" width="370" height="40"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_PRACTICAS_OTROS}==0?"NO":"SI"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="91">
+			<printWhenExpression><![CDATA[$F{NRO_PRACTICAS_OTROS}!=0]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="5aa954a1-b916-4ec7-945b-bdd9eb424719" x="0" y="0" width="535" height="88"/>
+				<subreportParameter name="id_inscripcion">
+					<subreportParameterExpression><![CDATA[$P{id_inscripcion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ficha_00_experiencia_otros.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="135">
+			<staticText>
+				<reportElement uuid="6f74391b-c5ee-43ec-ae0b-8a763fcb156c" x="0" y="29" width="165" height="20"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿Posee Discapacidad?]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f7927943-5534-4412-bf7d-1041cceb2f2b" x="165" y="29" width="370" height="20"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IND_DISCAPACIDAD}.equals("S")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="73bbef59-88d2-4f98-9935-8481bfd53a85" x="0" y="49" width="165" height="21"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Si es afirmativo, ¿Qué tipo de discpacidad es?]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="a47e5e64-a09e-4162-81d3-37d0a2bb8ef6" x="165" y="49" width="370" height="21"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO_DISCAPACIDAD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="712630b2-a7e6-4c1b-98af-48721533bbb8" x="0" y="70" width="165" height="21"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿Necesita ajuste razonables  en este proceso?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7b3ab2ac-b742-4dd3-a951-e91beb1ee98d" x="0" y="91" width="165" height="38"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿Cuáles?]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="47c58702-090f-440b-b14f-9cba5742217d" x="165" y="70" width="370" height="21"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NECESITA_AJUSTE_DISCAPACIDAD}.equals("S")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="d89789ba-c988-401c-92a8-745d424b9b4b" x="165" y="91" width="370" height="38"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DETALLE_AJUSTE_DISCAPACIDAD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bfb4a4b4-2332-4d94-a6c8-2a107ad3c269" x="0" y="2" width="535" height="20"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[4. INFORMACION FACULTATIVA]]></text>
+			</staticText>
+		</band>
+		<band height="85">
+			<staticText>
+				<reportElement uuid="bfb4a4b4-2332-4d94-a6c8-2a107ad3c269" x="0" y="0" width="535" height="20"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5. ANTECEDENTES]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="285c71c4-cbd4-48f4-98a5-02ce4bdaeff0" x="165" y="26" width="95" height="22"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REDAM}.equals("S")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a189625c-c746-44bb-a710-f1e1a5491e49" x="0" y="26" width="165" height="22"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿Se encuentra dentro del Registro de deudores alimentarios Morosos - REDAM?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fbdc9545-016f-4e4d-ba3b-608d149c28f5" x="260" y="26" width="136" height="22"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿A la fecha cuenta con antecedentes penales?]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="854a9267-0b19-4511-8ee6-84eaf62de81d" x="396" y="26" width="139" height="22"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANTECEDENTES_PENALES}.equals("S")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b80da0a9-1667-4b0e-bf74-1b7413d159dc" x="260" y="48" width="136" height="30"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿A la fecha cuenta con antecedentes judiciales?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2caa0dd9-3f65-452e-b357-2031e7e0c7c6" x="0" y="48" width="165" height="30"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[¿A la fecha cuenta con antecedentes policiales?]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="41acecd9-8190-44e3-a68c-306d365311bd" x="165" y="48" width="95" height="30"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANTECEDENTES_POLICIALES}.equals("S")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6a450fa2-c060-4fe3-b7bf-3637dc0df2b5" x="396" y="48" width="139" height="30"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANTECEDENTES_JUDICIALES}.equals("S")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="226">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="e198ac57-1166-41ea-83e9-f2f1c3f86507" x="165" y="134" width="370" height="87"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DETALLE_GRADO_PARENTESCO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="cadd1c26-1c55-480d-bf33-1ca04f2b52e6" x="165" y="63" width="370" height="45"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IND_IMPEDIMENTO_JURIDICO}.equals("S")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ec8caeff-8cfb-4338-bbdd-cda11ec896b1" x="165" y="108" width="370" height="26"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IND_GRADO_PARENTESCO}.equals("S")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="01ada5cd-bc68-46a9-a5ea-95a78c728ddc" x="0" y="63" width="165" height="45"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Se encuentra en incurso en alguno de los impedimentos dispuestos por el ordenamiento jurídico, para los servidores públicos.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bd35074d-20f0-4355-9c5a-6dae6b7d1b5d" x="0" y="108" width="165" height="113"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Declara no tener grado de parentesco hasta el 4° grado de consanguinidad o 2° de afinidad y por razón de matrimonio o por unión de hecho, con los funcionarios de dirección y/o personal de confianza de la Defensoría del Pueblo que gozan de la facultad de nombramiento y contratación de personal o tenga injerencia directa o indirecta en el presente concuro público. De ser afirmativo señale nombre y parentesco]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bfb4a4b4-2332-4d94-a6c8-2a107ad3c269" x="0" y="0" width="535" height="20"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5. DECLARACION JURADA DE IMPEDIMENTOS, PROHIBICIONES Y PARENTESCO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1a10b96f-8063-4ec3-b10a-4e87c2c1d912" x="396" y="23" width="139" height="40"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RNSDD}.equals("S")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="96697660-7362-4751-96d5-8580f799478f" x="0" y="23" width="165" height="40"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cuenta con sentencia condenatoria y/o ejecutoriada por delito doloso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cf17e958-4ce1-401f-870b-94da19921077" x="260" y="23" width="136" height="40"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Está inscrito en el Registro Nacional de Sanciones contra Servidores civiles]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="eb0e4b98-20cc-4d2b-bd93-3e4508d9b6b2" x="165" y="23" width="95" height="40"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IND_SENTENCIA_DELITO}.equals("S")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="68">
+			<subreport>
+				<reportElement uuid="a3b9029c-9daf-4b3a-b0a7-f9c4a6aa6078" x="0" y="0" width="535" height="67"/>
+				<subreportParameter name="id_inscripcion">
+					<subreportParameterExpression><![CDATA[$P{id_inscripcion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR3} + "ficha_03.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

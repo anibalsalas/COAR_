@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ficha_00_experiencia_otros" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3abcb9a7-f30c-4cd0-9883-5967dbe787c7">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_inscripcion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select decode(HE.modalidad_practicas,'T','Profesional','Pre-Profesional') as modalidad_practicas,
+           HE.fecha_ini_prac,
+           HE.fecha_fin_prac,
+	 HE.tipo_institucion,
+           HE.nombre_institucion,
+           HE.descripcion_practica,
+           'S'  marcar
+  from  prac_hist_experiencia HE
+where
+          HE.id_inscripcion     =   to_number($P{id_inscripcion})
+and HE.nombre_institucion <> 'DEFENSORÍA DEL PUEBLO']]>
+	</queryString>
+	<field name="MODALIDAD_PRACTICAS" class="java.lang.String"/>
+	<field name="FECHA_INI_PRAC" class="java.sql.Timestamp"/>
+	<field name="FECHA_FIN_PRAC" class="java.sql.Timestamp"/>
+	<field name="TIPO_INSTITUCION" class="java.lang.String"/>
+	<field name="NOMBRE_INSTITUCION" class="java.lang.String"/>
+	<field name="DESCRIPCION_PRACTICA" class="java.lang.String"/>
+	<field name="MARCAR" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="33092059-6b1e-4cc3-a575-e289a9b4b18f" x="0" y="45" width="165" height="32"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Descripción de tareas de apoyo]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d7fe7bb9-be6d-4a53-9d24-c3e9eba1a18e" x="165" y="25" width="178" height="20"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MODALIDAD_PRACTICAS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6d9ca213-c999-41c4-ab43-69df72ddc9d3" x="343" y="25" width="37" height="20"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tiempo]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="b88feb96-ff6e-483a-ac50-017f01124bdb" x="165" y="45" width="370" height="32"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION_PRACTICA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="3f9896c7-2eab-46e3-9767-0c6ee9612966" x="457" y="25" width="78" height="20"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_FIN_PRAC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8c02d545-9446-4e80-ab08-01a2a358664f" x="0" y="25" width="165" height="20"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Modalidad]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="dfcc77a7-4173-4750-b7e5-96c17357bebf" x="165" y="0" width="370" height="25"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_INSTITUCION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="f11d3566-c087-4eb0-8946-bf2f5f87e8ef" x="380" y="25" width="77" height="20"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_INI_PRAC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="99670789-285b-4af9-8806-08e135952eb3" x="0" y="0" width="165" height="25"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombre de Institución]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
