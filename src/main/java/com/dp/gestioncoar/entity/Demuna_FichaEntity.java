@@ -103,14 +103,14 @@ public class Demuna_FichaEntity implements Serializable {
     
     private String direccion_coar;
     
-    private Integer hora_inicio;
+    private String hora_inicio;
     
-    private Integer hora_fin;
+    private String hora_fin;
     
    
     
-    private LocalTime horas_total;
-    private LocalTime min_total;
+    private Integer horas_total;
+    private Integer min_total;
     
     @Transient
     private Demuna_FichaEntity coar_ficha;
@@ -381,35 +381,35 @@ public class Demuna_FichaEntity implements Serializable {
         this.direccion_coar = direccion_coar;
     }
 
-    public Integer getHora_inicio() {
+    public String getHora_inicio() {
         return hora_inicio;
     }
 
-    public void setHora_inicio(Integer hora_inicio) {
+    public void setHora_inicio(String hora_inicio) {
         this.hora_inicio = hora_inicio;
     }
 
-    public Integer getHora_fin() {
+    public String getHora_fin() {
         return hora_fin;
     }
 
-    public void setHora_fin(Integer hora_fin) {
+    public void setHora_fin(String hora_fin) {
         this.hora_fin = hora_fin;
     }
 
-    public LocalTime getHoras_total() {
+    public Integer getHoras_total() {
         return horas_total;
     }
 
-    public void setHoras_total(LocalTime horas_total) {
+    public void setHoras_total(Integer horas_total) {
         this.horas_total = horas_total;
     }
 
-    public LocalTime getMin_total() {
+    public Integer getMin_total() {
         return min_total;
     }
 
-    public void setMin_total(LocalTime min_total) {
+    public void setMin_total(Integer min_total) {
         this.min_total = min_total;
     }
 
@@ -533,7 +533,7 @@ public class Demuna_FichaEntity implements Serializable {
         this.cod_unico_ant = cod_unico_ant;
     }
 
-    
+   
    
 
 }
